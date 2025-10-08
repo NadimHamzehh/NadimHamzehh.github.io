@@ -4,508 +4,452 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nadim Hamzeh - Portfolio</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Use Inter font family -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9fafb; /* Very light background for a pleasant look */
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        /* Custom styles for the Deep Indigo accent color */
+        .accent-bg {
+            background-color: #4338CA; /* Deep Indigo (Tailwind indigo-700) */
+        }
+        /* Custom styles for the Bright Violet highlight color */
+        .accent-text {
+            color: #8B5CF6; /* Bright Violet (Tailwind violet-500) */
+        }
+        .project-card, .experience-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .project-card:hover, .experience-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15); /* Stronger, professional shadow on hover */
+        }
+
+        /* Dynamism: Scroll to Top Button */
+        #scrollToTopBtn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: none; /* Hidden by default */
+        }
+
+        /* Dynamism: Fade-in effect on scroll (for professional engagement) */
+        .section-hidden {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .section-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Dark Mode Specific Styles (JS will apply .dark-mode class to body) */
+        .dark-mode {
+            background-color: #1f2937; /* Dark Slate Gray */
+            color: #e5e7eb; /* Light Gray text */
+        }
+        .dark-mode .bg-white {
+            background-color: #374151 !important; /* Darker card background */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+            border-color: #4b5563;
+        }
+        .dark-mode .text-gray-900 { color: #f9fafb !important; }
+        .dark-mode .text-gray-800 { color: #e5e7eb !important; }
+        .dark-mode .text-gray-700 { color: #d1d5db !important; }
+        .dark-mode .text-gray-600 { color: #9ca3af !important; }
+        .dark-mode .text-gray-500 { color: #6b7280 !important; }
+        .dark-mode .accent-bg { background-color: #6366F1 !important; } /* Medium Indigo (Tailwind indigo-500) */
+        .dark-mode .accent-text { color: #C4B5FD !important; } /* Light Violet (Tailwind violet-300) */
+    </style>
 </head>
-<body>
-    <!-- Enhanced Loading Screen -->
-    <div class="loading-screen">
-        <div class="loader">
-            <div class="loader-container">
-                <div class="loader-circle"></div>
-                <div class="loader-circle"></div>
-                <div class="loader-circle"></div>
-                <div class="loader-circle"></div>
-                <div class="loader-logo">NH</div>
-                <div class="loader-percentage">0%</div>
-            </div>
-            <div class="loader-text">Loading Portfolio</div>
-            <div class="loader-progress">
-                <div class="loader-progress-bar"></div>
-            </div>
-            <div class="loader-dots">
-                <div class="loader-dot"></div>
-                <div class="loader-dot"></div>
-                <div class="loader-dot"></div>
-            </div>
-        </div>
-    </div>
+<body class="text-gray-800">
 
-    <!-- Back to Top Button -->
-    <button class="back-to-top">
-        <i class="fas fa-chevron-up"></i>
-    </button>
-
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <nav>
-                <div class="logo">
-                    <span class="logo-text">NH</span>
+    <!-- Navigation Bar -->
+    <nav class="sticky top-0 z-50 accent-bg shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0">
+                    <a href="#home" class="text-white text-2xl font-bold rounded-lg p-2 hover:bg-indigo-600 transition duration-300">Nadim Hamzeh</a>
                 </div>
-                <ul class="nav-links">
-                    <li><a href="#home" class="nav-link">Home</a></li>
-                    <li><a href="#education" class="nav-link">Education</a></li>
-                    <li><a href="#projects" class="nav-link">Projects</a></li>
-                    <li><a href="#experience" class="nav-link">Experience</a></li>
-                    <li><a href="#skills" class="nav-link">Skills</a></li>
-                    <li><a href="#contact" class="nav-link">Contact</a></li>
-                </ul>
-                <div class="hamburger">
-                    <div class="line"></div>
-                    <div class="line"></div>
-                    <div class="line"></div>
-                </div>
-            </nav>
-        </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <div class="hero-background">
-            <div class="floating-shapes">
-                <div class="shape shape-1"></div>
-                <div class="shape shape-2"></div>
-                <div class="shape shape-3"></div>
-                <div class="shape shape-4"></div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1 class="hero-title">
-                        <span class="title-line">Nadim</span>
-                        <span class="title-line">Hamzeh</span>
-                    </h1>
-                    <div class="typewriter">
-                        <h2>Computer Science Graduate</h2>
-                        <h2>AI & Software Developer</h2>
-                    </div>
-                    <p class="hero-description">Passionate about creating intelligent solutions through code and artificial intelligence</p>
-                    <div class="hero-buttons">
-                        <a href="#projects" class="btn btn-primary">View My Work</a>
-                        <a href="#contact" class="btn btn-secondary">Get In Touch</a>
-                    </div>
-                </div>
-                <div class="hero-visual">
-                    <div class="code-animation">
-                        <div class="code-line"></div>
-                        <div class="code-line"></div>
-                        <div class="code-line"></div>
-                        <div class="code-line"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="scroll-indicator">
-                <div class="mouse">
-                    <div class="wheel"></div>
-                </div>
-                <p>Scroll to explore</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Education -->
-    <section id="education" class="fade-section">
-        <div class="container">
-            <h2 class="section-title">Education</h2>
-            <div class="education-grid">
-                <div class="education-card" data-aos="fade-up">
-                    <div class="education-icon">
-                        <i class="fas fa-graduation-cap"></i>
-                    </div>
-                    <div class="education-content">
-                        <h3>Beirut Arab University</h3>
-                        <div class="education-meta">
-                            <span class="degree">Bachelor's in Computer Science</span>
-                            <span class="date">Graduated May 2025</span>
-                        </div>
-                        <p class="gpa">Cumulative GPA: 3.2/4.0</p>
-                        <div class="education-highlights">
-                            <span class="highlight">AI & Machine Learning</span>
-                            <span class="highlight">Software Engineering</span>
-                            <span class="highlight">Data Structures</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="education-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="education-icon">
-                        <i class="fas fa-school"></i>
-                    </div>
-                    <div class="education-content">
-                        <h3>La Cime School</h3>
-                        <div class="education-meta">
-                            <span class="degree">Lebanese Baccalaureate</span>
-                            <span class="date">2008-2021</span>
-                        </div>
-                        <p class="stream">Life Science Section</p>
-                        <div class="education-highlights">
-                            <span class="highlight">Mathematics</span>
-                            <span class="highlight">Physics</span>
-                            <span class="highlight">Biology</span>
-                        </div>
-                    </div>
+                <div class="flex space-x-4 items-center">
+                    <!-- Nav Links -->
+                    <a href="#projects" class="text-gray-300 hover:bg-indigo-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300">Projects</a>
+                    <a href="#experience" class="text-gray-300 hover:bg-indigo-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300">Experience</a>
+                    <a href="#skills" class="text-gray-300 hover:bg-indigo-600 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition duration-300">Skills & Education</a>
+                    
+                    <!-- Contact Button -->
+                    <a href="mailto:nadimhamze3@gmail.com" class="text-white bg-violet-500 hover:bg-violet-700 px-3 py-2 rounded-md text-sm font-medium transition duration-300">Contact</a>
+                    
+                    <!-- Dark Mode Toggle -->
+                    <button id="darkModeToggle" class="p-2 rounded-full text-white hover:bg-indigo-600 transition duration-300 focus:outline-none" aria-label="Toggle Dark Mode">
+                        <!-- Sun icon (for light mode) -->
+                        <svg id="sunIcon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                        <!-- Moon icon (for dark mode) -->
+                        <svg id="moonIcon" class="w-6 h-6 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                    </button>
                 </div>
             </div>
         </div>
-    </section>
+    </nav>
 
-    <!-- Projects -->
-    <section id="projects" class="fade-section">
-        <div class="container">
-            <h2 class="section-title">Featured Projects</h2>
-            <div class="projects-grid">
-                <!-- Project 1 -->
-                <div class="project-card" data-aos="flip-left">
-                    <div class="project-header">
-                        <div class="project-icon">
-                            <i class="fas fa-robot"></i>
-                        </div>
-                        <div class="project-links">
-                            <button class="project-btn view-details" data-project="algebral">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">Algebral (AI Automation)</h3>
-                        <p class="project-description">WhatsApp Math Tutor using AI that delivers professional math answers in under 7 seconds.</p>
-                        <div class="project-features">
-                            <span class="feature">OpenAI LLM Integration</span>
-                            <span class="feature">Twilio API</span>
-                            <span class="feature">Real-time Processing</span>
-                        </div>
-                    </div>
-                    <div class="project-tech">
-                        <span class="tech-tag">Make</span>
-                        <span class="tech-tag">Webhooks</span>
-                        <span class="tech-tag">Twilio</span>
-                        <span class="tech-tag">Gemini API</span>
-                    </div>
-                </div>
+    <!-- Main Content Container -->
+    <main class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
 
-                <!-- Project 2 -->
-                <div class="project-card" data-aos="flip-left" data-aos-delay="100">
-                    <div class="project-header">
-                        <div class="project-icon">
-                            <i class="fas fa-utensils"></i>
-                        </div>
-                        <div class="project-links">
-                            <button class="project-btn view-details" data-project="recipe">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">Recipe Generator</h3>
-                        <p class="project-description">AI-powered recipe generator that creates recipes from ingredient lists using deep learning.</p>
-                        <div class="project-features">
-                            <span class="feature">50K+ Recipes Dataset</span>
-                            <span class="feature">Fuzzy Matching</span>
-                            <span class="feature">Streamlit UI</span>
-                        </div>
-                    </div>
-                    <div class="project-tech">
-                        <span class="tech-tag">PyTorch</span>
-                        <span class="tech-tag">Pandas</span>
-                        <span class="tech-tag">Sentence Transformer</span>
-                        <span class="tech-tag">Streamlit</span>
-                    </div>
-                </div>
-
-                <!-- Project 3 -->
-                <div class="project-card" data-aos="flip-left" data-aos-delay="200">
-                    <div class="project-header">
-                        <div class="project-icon">
-                            <i class="fas fa-bee"></i>
-                        </div>
-                        <div class="project-links">
-                            <button class="project-btn view-details" data-project="beepro">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">BeePro</h3>
-                        <p class="project-description">Java OOP desktop application for beekeeping management and business analytics.</p>
-                        <div class="project-features">
-                            <span class="feature">Revenue Tracking</span>
-                            <span class="feature">Stock Management</span>
-                            <span class="feature">Business Insights</span>
-                        </div>
-                    </div>
-                    <div class="project-tech">
-                        <span class="tech-tag">Java</span>
-                        <span class="tech-tag">OOP</span>
-                        <span class="tech-tag">Desktop App</span>
-                    </div>
-                </div>
-
-                <!-- Project 4 -->
-                <div class="project-card" data-aos="flip-left" data-aos-delay="300">
-                    <div class="project-header">
-                        <div class="project-icon">
-                            <i class="fas fa-mobile-alt"></i>
-                        </div>
-                        <div class="project-links">
-                            <button class="project-btn view-details" data-project="sustaingo">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <h3 class="project-title">SustainGo</h3>
-                        <p class="project-description">Food delivery mobile application with full-stack development and project management.</p>
-                        <div class="project-features">
-                            <span class="feature">Flutter Frontend</span>
-                            <span class="feature">Django Backend</span>
-                            <span class="feature">RESTful APIs</span>
-                        </div>
-                    </div>
-                    <div class="project-tech">
-                        <span class="tech-tag">Flutter</span>
-                        <span class="tech-tag">Django</span>
-                        <span class="tech-tag">REST API</span>
-                        <span class="tech-tag">SQL</span>
-                    </div>
-                </div>
+        <!-- 1. Hero/Home Section -->
+        <section id="home" class="text-center py-20 bg-white rounded-xl shadow-2xl mb-12">
+            <h1 class="text-5xl md:text-6xl font-extrabold text-gray-900 mb-4">Nadim Hamzeh</h1>
+            <p class="text-xl text-gray-600 mb-8">Computer Science Graduate | AI & Deep Learning Enthusiast | Project Manager</p>
+            <div class="flex justify-center space-x-6 text-lg">
+                <a href="mailto:nadimhamze3@gmail.com" class="accent-text hover:underline flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-2 4v7a2 2 0 01-2 2H7a2 2 0 01-2-2v-7"></path></svg>
+                    nadimhamze3@gmail.com
+                </a>
+                <span class="text-gray-500">|</span>
+                <span class="text-gray-600 flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.828 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    Beirut, Lebanon
+                </span>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Experience -->
-    <section id="experience" class="fade-section">
-        <div class="container">
-            <h2 class="section-title">Work Experience</h2>
-            <div class="timeline">
-                <div class="timeline-item" data-aos="fade-right">
-                    <div class="timeline-marker">
-                        <div class="marker-dot"></div>
-                        <div class="marker-line"></div>
-                    </div>
-                    <div class="timeline-content">
-                        <div class="timeline-header">
-                            <h3>Private Tutor for Mathematics & Physics</h3>
-                            <span class="timeline-date">2020-2022</span>
-                        </div>
-                        <ul class="timeline-list">
-                            <li>Provided one-to-one tutoring for 10 hours weekly</li>
-                            <li>Helped failing students achieve success and improved grades</li>
-                            <li>Designed personalized lesson plans based on individual needs</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="timeline-item" data-aos="fade-left">
-                    <div class="timeline-marker">
-                        <div class="marker-dot"></div>
-                        <div class="marker-line"></div>
-                    </div>
-                    <div class="timeline-content">
-                        <div class="timeline-header">
-                            <h3>SustainGo - Project Manager & Leader</h3>
-                            <span class="timeline-date">2023-2024</span>
-                        </div>
-                        <p>Managed development of food delivery application</p>
-                        <ul class="timeline-list">
-                            <li>Developed Front-End using Flutter and Dart</li>
-                            <li>Built Back-End with Django, SQL, and PHP</li>
-                            <li>Implemented RESTful APIs and database architecture</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+        <!-- 2. Projects Section -->
+        <section id="projects" class="py-12">
+            <h2 class="text-4xl font-bold mb-10 border-b-4 border-violet-500 pb-2 text-gray-800">Featured Projects</h2>
 
-    <!-- Skills -->
-    <section id="skills" class="fade-section">
-        <div class="container">
-            <h2 class="section-title">Skills & Technologies</h2>
-            <div class="skills-container">
-                <div class="skill-category" data-aos="zoom-in">
-                    <div class="category-header">
-                        <i class="fas fa-code"></i>
-                        <h3>Technical Skills</h3>
-                    </div>
-                    <div class="skills-grid">
-                        <div class="skill-item">
-                            <span class="skill-name">Java</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="90"></div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+                <!-- Project 1: AlgebrAl (Spanning 3 columns) -->
+                <div class="project-card bg-white p-6 rounded-xl shadow-2xl border border-gray-200 flex flex-col md:col-span-3">
+                    <h3 class="text-3xl font-extrabold accent-text mb-2">AlgebrAl (AI Automation)</h3>
+                    <p class="text-sm text-gray-500 mb-4">AI-powered WhatsApp Math Tutor (2025)</p>
+                    
+                    <!-- Content and Visuals in a flexible layout -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Text Content -->
+                        <div class="lg:col-span-1 flex flex-col justify-between">
+                            <div>
+                                <p class="text-gray-600 mb-4">A functional WhatsApp Math Tutor using AI and APIs that provides accurate, professional math answers in under 7 seconds.</p>
+                                <ul class="list-disc list-inside text-sm text-gray-700 ml-4 space-y-2">
+                                    <li>Integrated an OpenAI LLM as the core teaching intelligence.</li>
+                                    <li>Managed Twilio API/webhook for instant message delivery.</li>
+                                    <li>Guaranteed high-quality responses via professional prompting and data filtering.</li>
+                                </ul>
+                            </div>
+                            <div class="mt-4 pt-4 border-t border-gray-100">
+                                <p class="text-xs font-medium text-gray-500">Tech: Make, Webhooks, Twilio API (whatsapp), Gemini LLM API</p>
                             </div>
                         </div>
-                        <div class="skill-item">
-                            <span class="skill-name">Python</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="85"></div>
+
+                        <!-- Visuals (spanning 2 columns on large screens) -->
+                        <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Image 1: WhatsApp Demo -->
+                            <div class="border border-gray-200 rounded-lg p-2 bg-gray-50 flex flex-col items-center">
+                                <img src="uploaded:demo algebrAI.jpg-a22711a8-6bb8-47e3-938b-e4b07488e6b4" alt="WhatsApp Demo of AlgebrAl showing PEMDAS steps" class="w-full h-auto max-h-96 object-contain rounded-md shadow-md">
+                                <p class="text-center text-sm text-gray-600 mt-2 font-medium">Live WhatsApp Demo & Step-by-step Solution</p>
                             </div>
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">JavaScript</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="80"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">SQL</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="85"></div>
+                            <!-- Image 2: Workflow Diagram -->
+                            <div class="border border-gray-200 rounded-lg p-2 bg-gray-50 flex flex-col items-center">
+                                <img src="uploaded:workflow algebrAI.png-302af9d0-9314-4235-8470-0ab48fcf1736" alt="AlgebrAl Automation Workflow Diagram" class="w-full h-auto max-h-96 object-contain rounded-md shadow-md">
+                                <p class="text-center text-sm text-gray-600 mt-2 font-medium">Automation Workflow (Make, HTTP, Twilio)</p>
                             </div>
                         </div>
                     </div>
+                </div> <!-- End AlgebrAl card -->
+
+                <!-- Project 2: Recipe Generator (Spanning 3 columns) -->
+                <div class="project-card bg-white p-6 rounded-xl shadow-2xl border border-gray-200 flex flex-col md:col-span-3">
+                    <h3 class="text-3xl font-extrabold accent-text mb-2">Recipe Generator (Deep Learning)</h3>
+                    <p class="text-sm text-gray-500 mb-4">Intelligent Recipe Generation from ingredients</p>
+                    
+                    <!-- Content and Visuals in a flexible layout -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Text Content -->
+                        <div class="lg:col-span-1 flex flex-col justify-between">
+                            <div>
+                                <p class="text-gray-600 mb-4">An intelligent generator that creates recipes based on a user's list of ingredients, demonstrating expertise in managing large datasets and functional AI.</p>
+                                <ul class="list-disc list-inside text-sm text-gray-700 ml-4 space-y-2">
+                                    <li>Cleaned and preprocessed **50,000+ recipes** for model training.</li>
+                                    <li>Used Fuzzy Matching & Sentence Transformers for accurate input linking.</li>
+                                    <li>Built a clean frontend interface using **Streamlit**.</li>
+                                </ul>
+                            </div>
+                            <div class="mt-4 pt-4 border-t border-gray-100">
+                                <p class="text-xs font-medium text-gray-500">Tech: Pandas, PyTorch, Fuzzy matching, Sentence Transformer, Streamlit</p>
+                            </div>
+                        </div>
+
+                        <!-- Visuals (spanning 2 columns on large screens) -->
+                        <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Image 1: Empty Recipe Interface (Before Input) -->
+                            <div class="border border-gray-200 rounded-lg p-2 bg-gray-50 flex flex-col items-center">
+                                <img src="uploaded:empty recipe.png-838120b7-07fa-442c-acaa-ee651d440460" alt="Empty Recipe Generator input screen" class="w-full h-auto max-h-96 object-contain rounded-md shadow-md">
+                                <p class="text-center text-sm text-gray-600 mt-2 font-medium">Initial Interface: Ready for Ingredient Input</p>
+                            </div>
+                            <!-- Image 2: Input Recipe Results -->
+                            <div class="border border-gray-200 rounded-lg p-2 bg-gray-50 flex flex-col items-center">
+                                <img src="uploaded:input recipe.jpg-14f7eb01-7eb5-4175-9d9c-4215a364798b" alt="Recipe Generator showing results for cheese tomato chicken" class="w-full h-auto max-h-96 object-contain rounded-md shadow-md">
+                                <p class="text-center text-sm text-gray-600 mt-2 font-medium">Output: Semantic Search Results from Ingredients</p>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- End Recipe Generator card -->
+
+
+                <!-- Project 3: BeePro (Now moves down to occupy one column) -->
+                <div class="project-card bg-white p-6 rounded-xl shadow-lg border border-gray-100 flex flex-col md:col-span-1">
+                    <h3 class="text-2xl font-semibold accent-text mb-2">BeePro - Beekeeping Management</h3>
+                    <p class="text-sm text-gray-500 mb-4">Java OOP Desktop Application</p>
+                    <p class="text-gray-600 mb-4 flex-grow">A comprehensive desktop application designed to support beekeepers in managing and professionalizing their operations through object-oriented principles.</p>
+                    <ul class="list-disc list-inside text-sm text-gray-700 ml-4 space-y-1">
+                        <li>Built entirely using **Java** and **OOP** principles.</li>
+                        <li>Tracks revenue, profits, stock levels, and field-specific metrics.</li>
+                        <li>Provides actionable business insights for performance.</li>
+                    </ul>
+                    <div class="mt-4 pt-4 border-t border-gray-100">
+                        <p class="text-xs font-medium text-gray-500">Tech: Java, Object-Oriented Programming (OOP)</p>
+                    </div>
+                </div>
+                
+                <!-- Placeholder for layout alignment on desktop (only 3 columns total) -->
+                <div class="hidden md:block md:col-span-2"></div>
+
+
+            </div>
+        </section>
+
+        <!-- 3. Work Experience Section -->
+        <section id="experience" class="py-12">
+            <h2 class="text-4xl font-bold mb-10 border-b-4 border-violet-500 pb-2 text-gray-800">Work Experience</h2>
+
+            <div class="space-y-8">
+                <!-- Experience 1: SustainGo -->
+                <div class="experience-card bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+                    <div class="flex justify-between items-start">
+                        <h3 class="text-xl font-semibold accent-text">SustainGo (Mobile Application)</h3>
+                        <span class="text-sm text-gray-500 font-medium">2023-2024</span>
+                    </div>
+                    <p class="text-lg font-medium text-gray-700 mb-3">Project Manager, Leader</p>
+                    <ul class="list-disc list-inside text-gray-600 ml-4 space-y-1">
+                        <li>Managed the creation of a food delivery application, focusing on web presence and user behaviorism.</li>
+                        <li>Developed the Front-End using <span class="font-medium">Flutter and Dart</span>.</li>
+                        <li>Developed the Back-End using <span class="font-medium">Django, SQL, and PHP</span>.</li>
+                        <li>Developed RESTful APIs leveraging Python libraries like FastAPI and Uvicorn.</li>
+                    </ul>
                 </div>
 
-                <div class="skill-category" data-aos="zoom-in" data-aos-delay="100">
-                    <div class="category-header">
-                        <i class="fas fa-brain"></i>
-                        <h3>AI & Data Science</h3>
+                <!-- Experience 2: Private Tutor -->
+                <div class="experience-card bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+                    <div class="flex justify-between items-start">
+                        <h3 class="text-xl font-semibold accent-text">Private Tutor for Mathematics & Physics</h3>
+                        <span class="text-sm text-gray-500 font-medium">2020-2022</span>
                     </div>
-                    <div class="skills-grid">
-                        <div class="skill-item">
-                            <span class="skill-name">Machine Learning</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="80"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">Deep Learning</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="75"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">PyTorch</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="70"></div>
-                            </div>
-                        </div>
-                        <div class="skill-item">
-                            <span class="skill-name">AI Automation</span>
-                            <div class="skill-bar">
-                                <div class="skill-progress" data-width="85"></div>
-                            </div>
-                        </div>
-                    </div>
+                    <p class="text-lg font-medium text-gray-700 mb-3">One-to-One Tutoring</p>
+                    <ul class="list-disc list-inside text-gray-600 ml-4 space-y-1">
+                        <li>Provided 10 hours of one-to-one tutoring weekly, helping students achieve success and improved grades.</li>
+                        <li>Designed personalized lesson plans depending on each student's specific needs.</li>
+                    </ul>
                 </div>
+            </div>
+        </section>
 
-                <div class="skill-category" data-aos="zoom-in" data-aos-delay="200">
-                    <div class="category-header">
-                        <i class="fas fa-tasks"></i>
-                        <h3>Professional Skills</h3>
+        <!-- 4. Skills & Education Section (Combined for space efficiency) -->
+        <section id="skills" class="py-12 grid grid-cols-1 lg:grid-cols-2 gap-12">
+
+            <!-- Skills Column -->
+            <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100">
+                <h2 class="text-3xl font-bold mb-6 border-b-2 border-violet-400 pb-2 text-gray-800">Technical & Soft Skills</h2>
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="text-xl font-semibold text-gray-700 mb-2">Programming & Tools</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="skill-tag">Java</span>
+                            <span class="skill-tag">C++</span>
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">JavaScript</span>
+                            <span class="skill-tag">HTML/CSS</span>
+                            <span class="skill-tag">PHP</span>
+                            <span class="skill-tag">SQL / MySQL</span>
+                            <span class="skill-tag">Git</span>
+                        </div>
                     </div>
-                    <div class="skills-list">
-                        <div class="professional-skill">
-                            <i class="fas fa-chart-line"></i>
-                            <span>Project Management</span>
+
+                    <div>
+                        <h4 class="text-xl font-semibold text-gray-700 mb-2">AI & Development</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="skill-tag">Machine/Deep Learning</span>
+                            <span class="skill-tag">AI Automation</span>
+                            <span class="skill-tag">PyTorch / Pandas</span>
+                            <span class="skill-tag">RESTful APIs</span>
+                            <span class="skill-tag">Django Frameworks</span>
                         </div>
-                        <div class="professional-skill">
-                            <i class="fas fa-users"></i>
-                            <span>Team Leadership</span>
-                        </div>
-                        <div class="professional-skill">
-                            <i class="fas fa-comments"></i>
-                            <span>Communication</span>
-                        </div>
-                        <div class="professional-skill">
-                            <i class="fas fa-lightbulb"></i>
-                            <span>Problem Solving</span>
+                    </div>
+
+                    <div>
+                        <h4 class="text-xl font-semibold text-gray-700 mb-2">Soft Skills</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="skill-tag">Project Management</span>
+                            <span class="skill-tag">Leadership</span>
+                            <span class="skill-tag">Teamwork</span>
+                            <span class="skill-tag">Effective Communication</span>
+                            <span class="skill-tag">Public Relations</span>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- Languages -->
-    <section id="languages" class="fade-section">
-        <div class="container">
-            <h2 class="section-title">Languages</h2>
-            <div class="languages-grid">
-                <div class="language-card" data-aos="fade-up">
-                    <div class="language-icon">
-                        <i class="fas fa-language"></i>
+            <!-- Education Column -->
+            <div class="bg-white p-8 rounded-xl shadow-lg border border-gray-100">
+                <h2 class="text-3xl font-bold mb-6 border-b-2 border-violet-400 pb-2 text-gray-800">Education</h2>
+
+                <div class="space-y-6">
+                    <!-- Education 1: BAU -->
+                    <div>
+                        <h3 class="text-xl font-semibold accent-text mb-1">Bachelor's in Computer Science</h3>
+                        <p class="text-lg text-gray-700 font-medium">Beirut Arab University, Beirut, Lebanon</p>
+                        <p class="text-sm text-gray-500 mb-2">Graduated May 2025</p>
+                        <p class="text-base text-gray-600">Cumulative GPA: 3.2/4.0</p>
                     </div>
-                    <h3>English</h3>
-                    <p>Fluent</p>
-                    <div class="language-level">
-                        <div class="level-dot active"></div>
-                        <div class="level-dot active"></div>
-                        <div class="level-dot active"></div>
-                        <div class="level-dot active"></div>
-                        <div class="level-dot active"></div>
+
+                    <!-- Education 2: School -->
+                    <div>
+                        <h3 class="text-xl font-semibold accent-text mb-1">Lebanese Baccalaureate (Life Science)</h3>
+                        <p class="text-lg text-gray-700 font-medium">La Cime School, Choueifat, Lebanon</p>
+                        <p class="text-sm text-gray-500 mb-2">2008-2021</p>
                     </div>
-                </div>
-                <div class="language-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="language-icon">
-                        <i class="fas fa-language"></i>
-                    </div>
-                    <h3>Arabic</h3>
-                    <p>Native</p>
-                    <div class="language-level">
-                        <div class="level-dot active"></div>
-                        <div class="level-dot active"></div>
-                        <div class="level-dot active"></div>
-                        <div class="level-dot active"></div>
-                        <div class="level-dot active"></div>
-                    </div>
-                </div>
-                <div class="language-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="language-icon">
-                        <i class="fas fa-language"></i>
-                    </div>
-                    <h3>French</h3>
-                    <p>Fluent</p>
-                    <div class="language-level">
-                        <div class="level-dot active"></div>
-                        <div class="level-dot active"></div>
-                        <div class="level-dot active"></div>
-                        <div class="level-dot active"></div>
-                        <div class="level-dot"></div>
+
+                    <div class="mt-8">
+                         <h3 class="text-xl font-semibold accent-text mb-1">Languages</h3>
+                         <p class="text-lg text-gray-700">Fluent in English, Arabic, and French.</p>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+    </main>
 
     <!-- Footer -->
-    <footer id="contact">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section" data-aos="fade-up">
-                    <h3>Let's Connect</h3>
-                    <p>Interested in collaborating or have opportunities? I'd love to hear from you!</p>
-                    <div class="contact-info">
-                        <a href="tel:+96176942377" class="contact-link">
-                            <i class="fas fa-phone"></i>
-                            +961 76 942 377
-                        </a>
-                        <a href="mailto:nadimhamze3@gmail.com" class="contact-link">
-                            <i class="fas fa-envelope"></i>
-                            nadimhamze3@gmail.com
-                        </a>
-                    </div>
-                </div>
-                <div class="footer-section" data-aos="fade-up" data-aos-delay="100">
-                    <h3>Quick Links</h3>
-                    <div class="footer-links">
-                        <a href="#home">Home</a>
-                        <a href="#projects">Projects</a>
-                        <a href="#experience">Experience</a>
-                        <a href="#skills">Skills</a>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Nadim Hamzeh. All rights reserved.</p>
-                <div class="social-links">
-                    <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-github"></i></a>
-                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                </div>
-            </div>
+    <footer class="accent-bg mt-12 py-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-300">
+            <p>&copy; 2025 Nadim Hamzeh. Built from CV data.</p>
+            <p class="mt-2 text-sm">Languages: English, Arabic, French</p>
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <!-- Scroll to Top Button -->
+    <button id="scrollToTopBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white p-4 rounded-full shadow-xl transition duration-300 focus:outline-none">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+    </button>
+
+    <!-- JavaScript for Dynamic Features -->
+    <script>
+        // Apply professional skill tag styling
+        document.querySelectorAll('.skill-tag').forEach(tag => {
+            tag.classList.add('px-3', 'py-1', 'bg-indigo-100', 'text-indigo-700', 'text-sm', 'font-medium', 'rounded-full', 'shadow-sm');
+        });
+
+        // --- 1. Smooth Scrolling ---
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // --- 2. Dark Mode Toggle ---
+        const body = document.body;
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const sunIcon = document.getElementById('sunIcon');
+        const moonIcon = document.getElementById('moonIcon');
+
+        // Function to set dark mode
+        function setDarkMode(isDark) {
+            if (isDark) {
+                body.classList.add('dark-mode');
+                sunIcon.classList.add('hidden');
+                moonIcon.classList.remove('hidden');
+            } else {
+                body.classList.remove('dark-mode');
+                sunIcon.classList.remove('hidden');
+                moonIcon.classList.add('hidden');
+            }
+        }
+
+        // Check for saved preference or system preference on load
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            setDarkMode(true);
+        } else if (savedTheme === 'light') {
+            setDarkMode(false);
+        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            setDarkMode(true);
+        }
+
+
+        // Toggle handler
+        darkModeToggle.addEventListener('click', () => {
+            const isDark = body.classList.contains('dark-mode');
+            setDarkMode(!isDark);
+            localStorage.setItem('theme', !isDark ? 'dark' : 'light');
+        });
+
+
+        // --- 3. Scroll to Top Button ---
+        const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+
+        // Show/hide button based on scroll position
+        window.onscroll = function() {
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                scrollToTopBtn.style.display = "block";
+            } else {
+                scrollToTopBtn.style.display = "none";
+            }
+        };
+
+        // Scroll to top function
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // --- 4. Intersection Observer for Section Fade-in (Professional Polish) ---
+        const sections = document.querySelectorAll('section');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('section-visible');
+                    entry.target.classList.remove('section-hidden');
+                    // Stop observing after the element is visible
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1 // 10% of the element must be visible to trigger
+        });
+
+        // Apply initial hidden state and start observing
+        sections.forEach(section => {
+            section.classList.add('section-hidden');
+            observer.observe(section);
+        });
+
+    </script>
+
 </body>
 </html>
