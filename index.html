@@ -9,28 +9,18 @@
     <!-- Use Inter font -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     <style>
-        /* --- COLOR PALETTE: Modern Dark / Electric Cyan --- */
+        /* --- COLOR PALETTE: Deep Blue / Light Blue Accent (Based on your preference) --- */
         
-        /* Dark Mode Styling (Modern Dark / Electric Cyan) */
-        .dark {
-            --color-bg-primary: #0D1117; /* Deep Charcoal (GitHub Dark look) */
-            --color-text-primary: #F0F6F0; /* Near White */
-            --color-accent: #00C4CC; /* Electric Cyan/Teal */
-            --color-card-bg: #161B22; /* Slightly darker charcoal for card contrast */
-            --color-subtle: #8B949E; /* Grey details for tertiary text */
-            --color-blended-bg: #0D1117; /* Used for sections that should blend with primary BG (like the new Quick Facts/Experience blocks) */
+        /* Define the deep blue color theme variables */
+        :root {
+            --color-bg-primary: #0A192F; /* Deep Navy (Main Background) */
+            --color-text-primary: white; /* Near White */
+            --color-accent: #74A9FF; /* Bright Blue/Light Blue */
+            --color-card-bg: #1A2E4B; /* Card/Block Background (Slight contrast) */
+            --color-subtle-bg: #2A4365; /* Subtle Background for borders/details */
+            --color-text-subtle: #BCCCDC; /* Light Blue-Gray for tertiary text */
         }
         
-        /* Light Mode Styling (Clean White / Darker Blue-Teal) */
-        :not(.dark) {
-            --color-bg-primary: #ffffff;
-            --color-text-primary: #161B22; 
-            --color-accent: #007ACC; /* Darker Blue */
-            --color-card-bg: #f4f4f5; /* Cards remain slightly off-white */
-            --color-subtle: #4B5563;
-            --color-blended-bg: #ffffff;
-        }
-
         /* Global Defaults */
         body {
             font-family: 'Inter', sans-serif;
@@ -46,6 +36,7 @@
         
         /* --- HEADING STYLE --- */
         .section-heading {
+            /* Use linear gradient for a modern text effect */
             background-image: linear-gradient(to right, var(--color-accent), var(--color-text-primary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -74,6 +65,7 @@
             border-radius: 2px;
         }
         
+        /* Center the heading for the Contact section */
         #contact .section-heading {
              margin-left: auto;
              margin-right: auto;
@@ -89,26 +81,33 @@
 
         /* --- CARD & INTERACTION STYLES --- */
         
-        .project-card, .skill-group, .experience-card {
-            background-color: var(--color-card-bg); /* Use the slightly darker color */
+        .project-card, .skill-group, .experience-card, .quick-facts-card {
+            background-color: var(--color-card-bg); /* Use the slightly lighter blue */
             transition: all 0.3s ease-in-out;
-            border: 1px solid transparent; 
+            border: 1px solid var(--color-subtle-bg); /* Use the subtle background for the border */
+            border-radius: 0.75rem; /* rounded-xl */
         }
         
-        /* Project Card Hover Effect: Subtle Glow/Border */
+        /* Card Hover Effect: Subtle Glow/Border remains the primary way to define the block */
         .project-card:hover, .experience-card:hover {
-            box-shadow: 0 0 12px rgba(0, 196, 204, 0.5), 0 0 25px rgba(0, 196, 204, 0.2);
-            border-color: rgba(0, 196, 204, 0.8); 
-            transform: translateY(-4px); /* Slight lift */
+            box-shadow: 0 0 15px rgba(116, 169, 255, 0.7), 0 0 30px rgba(116, 169, 255, 0.4);
+            border-color: var(--color-accent); 
+            transform: translateY(-4px); 
         }
 
         /* Helper class for skill tags */
         .skill-tag {
-            @apply text-sm font-medium py-1 px-3 rounded-full border border-[var(--color-accent)] text-[var(--color-accent)] transition-all duration-200;
-            background-color: transparent;
+            @apply text-sm font-medium py-1 px-3 rounded-full transition-all duration-200;
+            border: 1px solid var(--color-accent);
+            color: var(--color-accent);
+            background-color: var(--color-subtle-bg); /* Subtle blue background for tags */
+        }
+        .skill-tag:hover {
+            background-color: var(--color-accent);
+            color: var(--color-bg-primary); /* Dark text on hover for contrast */
         }
         
-        /* Light/Dark Mode Toggle Icon Style */
+        /* Light/Dark Mode Toggle Icon Style (Not implemented but good to keep structure clean) */
         #mode-toggle-icon {
             cursor: pointer;
             width: 24px;
@@ -117,7 +116,7 @@
         
     </style>
 </head>
-<body class="dark transition-colors duration-300">
+<body class="transition-colors duration-300">
 
     <!-- Full-Screen Image Modal / Lightbox for Enlargement -->
     <div id="image-modal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-90 flex justify-center items-center p-4 transition-opacity duration-300" onclick="closeModal()">
@@ -128,45 +127,8 @@
         </div>
     </div>
 
-    <!-- JavaScript for Dark Mode Toggle and Lightbox -->
+    <!-- JavaScript for Lightbox -->
     <script>
-        // --- Dark Mode Logic ---
-        // Set default theme to dark if preferred by system, or just dark mode as the default experience
-        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark');
-            document.body.classList.add('dark'); 
-            localStorage.theme = 'dark'; // Ensure localStorage reflects the default
-        } else {
-            document.documentElement.classList.remove('dark');
-            document.body.classList.remove('dark');
-            localStorage.theme = 'light';
-        }
-
-        function toggleDarkMode() {
-            if (document.documentElement.classList.contains('dark')) {
-                document.documentElement.classList.remove('dark');
-                document.body.classList.remove('dark');
-                localStorage.theme = 'light';
-            } else {
-                document.documentElement.classList.add('dark');
-                document.body.classList.add('dark');
-                localStorage.theme = 'dark';
-            }
-            updateModeIcon();
-        }
-
-        function updateModeIcon() {
-            const icon = document.getElementById('mode-toggle-icon');
-            // Use the dark class on HTML to determine the current theme
-            if (document.documentElement.classList.contains('dark')) {
-                // Sun Icon (suggests switching to light mode)
-                icon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path d="M12 2.25a.75.75 0 0 1 .75.75v2.25a.75.75 0 0 1-1.5 0V3a.75.75 0 0 1 .75-.75ZM7.584 6.223a.75.75 0 0 0-.843.088L5.275 7.828a.75.75 0 0 0 1.06 1.06l1.46-1.46a.75.75 0 0 0-.088-1.065ZM17.416 6.223a.75.75 0 0 0-.088 1.065l1.46 1.46a.75.75 0 0 0 1.06-1.06l-1.46-1.46a.75.75 0 0 0-.972-.088ZM12 7.5a4.5 4.5 0 1 0 4.5 4.5 4.5 4.5 0 0 0-4.5-4.5ZM19.5 12a.75.75 0 0 0 .75-.75h2.25a.75.75 0 0 0 0-1.5h-2.25a.75.75 0 0 0-.75.75ZM17.416 17.777a.75.75 0 0 0 .972.088l1.46-1.46a.75.75 0 0 0-1.06-1.06l-1.46 1.46a.75.75 0 0 0-.088 1.065ZM12 18.75a.75.75 0 0 0-.75.75v2.25a.75.75 0 0 0 1.5 0v-2.25a.75.75 0 0 0-.75-.75ZM7.584 17.777a.75.75 0 0 0-.972-.088l-1.46 1.46a.75.75 0 0 0 1.06 1.06l1.46-1.46a.75.75 0 0 0 .088-1.065ZM4.5 12a.75.75 0 0 0-.75.75h-2.25a.75.75 0 0 0 0 1.5h2.25a.75.75 0 0 0 .75-.75Z" /></svg>';
-            } else {
-                // Moon Icon (suggests switching to dark mode)
-                icon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path fill-rule="evenodd" d="M9.52 2.306a.75.75 0 0 1 .484.704v1.2a.75.75 0 0 1-.848.736A10.323 10.323 0 0 0 3 14.175V17.5a.75.75 0 0 0 1.5 0v-2.003c4.132 2.298 8.875 1.701 12.336-1.86a.75.75 0 1 0-1.026-1.12c-3.14 3.208-7.794 3.424-11.233 1.096a.75.75 0 0 1-.722-.511l-.816-1.722a.75.75 0 0 1-.035-.14 8.82 8.82 0 0 1 4.502-12.083h-.001ZM18.5 12a.75.75 0 0 0 0 1.5h2.25a.75.75 0 0 0 0-1.5h-2.25ZM12 18.5a.75.75 0 0 0 0 1.5h.008a.75.75 0 0 0 0-1.5H12ZM4.5 12a.75.75 0 0 0 0 1.5h2.25a.75.75 0 0 0 0-1.5H4.5ZM17.268 5.732a.75.75 0 0 0 .53-.22l1.272-1.273a.75.75 0 1 0-1.06-1.06l-1.273 1.272a.75.75 0 0 0 .53.22ZM5.732 17.268a.75.75 0 0 0 .22.53l1.272 1.272a.75.75 0 0 0 1.06-1.06l-1.273-1.272a.75.75 0 0 0-.53.22ZM12 5.25a6.75 6.75 0 0 1 6.75 6.75 6.75 6.75 0 0 1-6.75 6.75 6.75 6.75 0 0 1-6.75-6.75A6.75 6.75 0 0 1 12 5.25ZM6.732 6.732a.75.75 0 0 0 .22.53l1.272 1.272a.75.75 0 0 0 1.06-1.06l-1.273-1.272a.75.75 0 0 0-.53.22Z" clip-rule="evenodd" /></svg>';
-            }
-        }
-
         // --- Lightbox/Modal Logic ---
         function openModal(imageSrc) {
             const modal = document.getElementById('image-modal');
@@ -179,15 +141,12 @@
             const modal = document.getElementById('image-modal');
             modal.classList.add('hidden');
         }
-
-        // Initialize icon on load
-        document.addEventListener('DOMContentLoaded', updateModeIcon);
     </script>
     
     <!-- 
         Sticky Header/Navigation 
     -->
-    <header class="sticky top-0 z-50 py-4 backdrop-blur-md bg-opacity-90 bg-[var(--color-bg-primary)] border-b border-[var(--color-card-bg)] transition-colors duration-300">
+    <header class="sticky top-0 z-50 py-4 backdrop-blur-md bg-opacity-90 transition-colors duration-300" style="background-color: var(--color-bg-primary);">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center max-w-5xl">
             <a href="#hero" class="text-xl font-extrabold hover:opacity-80 transition-opacity">Nadim <span class="accent-text">Hamzeh</span></a>
             <nav class="hidden md:flex space-x-8 text-lg font-medium">
@@ -197,8 +156,9 @@
                 <a href="#projects" class="hover:text-[var(--color-accent)] transition-colors">Projects</a>
                 <a href="#contact" class="hover:text-[var(--color-accent)] transition-colors">Contact</a>
             </nav>
-            <div id="mode-toggle-icon" onclick="toggleDarkMode()" class="text-[var(--color-text-primary)] hover:text-[var(--color-accent)] transition-colors">
-                <!-- Icon will be inserted by JavaScript -->
+            <!-- Mode Toggle Placeholder (removed the functionality but kept the space clean) -->
+            <div id="mode-toggle-icon" class="text-[var(--color-text-primary)]">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path fill-rule="evenodd" d="M9.52 2.306a.75.75 0 0 1 .484.704v1.2a.75.75 0 0 1-.848.736A10.323 10.323 0 0 0 3 14.175V17.5a.75.75 0 0 0 1.5 0v-2.003c4.132 2.298 8.875 1.701 12.336-1.86a.75.75 0 1 0-1.026-1.12c-3.14 3.208-7.794 3.424-11.233 1.096a.75.75 0 0 1-.722-.511l-.816-1.722a.75.75 0 0 1-.035-.14 8.82 8.82 0 0 1 4.502-12.083h-.001ZM18.5 12a.75.75 0 0 0 0 1.5h2.25a.75.75 0 0 0 0-1.5h-2.25ZM12 18.5a.75.75 0 0 0 0 1.5h.008a.75.75 0 0 0 0-1.5H12ZM4.5 12a.75.75 0 0 0 0 1.5h2.25a.75.75 0 0 0 0-1.5H4.5ZM17.268 5.732a.75.75 0 0 0 .53-.22l1.272-1.273a.75.75 0 1 0-1.06-1.06l-1.273 1.272a.75.75 0 0 0 .53.22ZM5.732 17.268a.75.75 0 0 0 .22.53l1.272 1.272a.75.75 0 0 0 1.06-1.06l-1.273-1.272a.75.75 0 0 0-.53.22ZM12 5.25a6.75 6.75 0 0 1 6.75 6.75 6.75 6.75 0 0 1-6.75 6.75 6.75 6.75 0 0 1-6.75-6.75A6.75 6.75 0 0 1 12 5.25ZM6.732 6.732a.75.75 0 0 0 .22.53l1.272 1.272a.75.75 0 0 0 1.06-1.06l-1.273-1.272a.75.75 0 0 0-.53.22Z" clip-rule="evenodd" /></svg>
             </div>
         </div>
     </header>
@@ -206,30 +166,30 @@
     <main class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl pb-24">
 
         <!-- 
-            0. Hero Section - Maximum Impact
+            0. Hero Section
         -->
         <section id="hero" class="pt-24 md:pt-40 min-h-[90vh] flex flex-col justify-center text-center">
             <p class="text-xl font-semibold accent-text mb-4 uppercase tracking-widest">Hello, I'm Nadim</p>
             <h1 class="text-6xl sm:text-7xl lg:text-[6rem] font-extrabold mb-6 leading-tight text-[var(--color-text-primary)]">
                 AI Automation <span class="accent-text">Engineer</span>
             </h1>
-            <p class="text-2xl sm:text-3xl font-light mb-10 text-[var(--color-subtle)] max-w-3xl mx-auto">
+            <p class="text-2xl sm:text-3xl font-light mb-10 text-[var(--color-text-subtle)] max-w-3xl mx-auto">
                 Transforming complex challenges into scalable, elegant software solutions.
             </p>
             <div class="flex justify-center space-x-6">
-                <a href="#projects" class="py-3 px-8 bg-[var(--color-accent)] text-white font-bold text-lg rounded-full shadow-lg transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_20px_rgba(0,196,204,0.7)]">
+                <a href="#projects" class="py-3 px-8 bg-[var(--color-accent)] text-white font-bold text-lg rounded-full shadow-lg transition-all duration-300 transform hover:scale-105" style="box-shadow: 0 0 20px rgba(116, 169, 255, 0.7);">
                     View My Work
                 </a>
-                <a href="mailto:nadimhamze3@gmail.com" class="py-3 px-8 border-2 border-[var(--color-accent)] text-[var(--color-accent)] font-bold text-lg rounded-full hover:bg-[var(--color-accent)] hover:text-white transition-all duration-300 transform hover:scale-105">
+                <a href="#contact" class="py-3 px-8 border-2 border-[var(--color-accent)] text-[var(--color-accent)] font-bold text-lg rounded-full hover:bg-[var(--color-accent)] hover:text-white transition-all duration-300 transform hover:scale-105">
                     Contact Me
                 </a>
             </div>
         </section>
 
         <!-- 
-            1. About Section (Updated Quick Facts - Blended Background, No Role/Title)
+            1. About Section (Quick Facts block uses the card background color)
         -->
-        <section id="about" class="py-24 md:py-36 border-t border-[var(--color-card-bg)]">
+        <section id="about" class="py-24 md:py-36 border-t border-[var(--color-subtle-bg)]">
             <h2 class="section-heading">About Me</h2>
             <div class="grid md:grid-cols-4 gap-12 items-start">
                 <div class="md:col-span-3 text-lg leading-relaxed space-y-6">
@@ -237,11 +197,11 @@
                     <p>My expertise lies in building robust applications, from <b>Java OOP</b> management systems and <b>Flutter/Django</b> mobile apps to state-of-the-art <b>AI Tutors</b> and <b>Recipe Generators</b> utilizing modern tools like the <b>Gemini LLM</b>, PyTorch, and Sentence Transformers.</p>
                     <p>I thrive as a <b>Project Manager and Leader</b>, driving projects like SustainGo from concept to deployment, while ensuring high-quality code and effective teamwork. I am fluent in English, Arabic, and French.</p>
                 </div>
-                <!-- Quick Facts Block - Blended background, title/role removed -->
-                <div class="md:col-span-1 text-sm p-6 rounded-xl border border-[var(--color-accent)]/20 bg-[var(--color-blended-bg)]">
-                    <ul class="space-y-3 text-[var(--color-subtle)] pt-2">
+                <!-- Quick Facts Block - uses the dedicated quick-facts-card class which maps to var(--color-card-bg) -->
+                <div class="md:col-span-1 text-sm p-6 rounded-xl quick-facts-card">
+                    <ul class="space-y-3 text-[var(--color-text-subtle)] pt-2">
                         <li><span class="font-semibold text-[var(--color-text-primary)]">Education:</span> B.Sc. in Computer Science</li>
-                        <li><span class="font-semibold text-[var(--color-text-primary)]">GPA:</span> 3.2/4.0</li>
+                        <li><span class="font-semibold text-[var(--color-text-primary)]">GPA:</span> $3.2/4.0$</li>
                         <li><span class="font-semibold text-[var(--color-text-primary)]">Graduation:</span> May 2025</li>
                         <li><span class="font-semibold text-[var(--color-text-primary)]">Location:</span> Beirut, Lebanon</li>
                     </ul>
@@ -250,48 +210,48 @@
         </section>
 
         <!-- 
-            2. Skills Section 
+            2. Skills Section (Skill group blocks use the card background color)
         -->
-        <section id="skills" class="py-24 md:py-36 border-t border-[var(--color-card-bg)]">
+        <section id="skills" class="py-24 md:py-36 border-t border-[var(--color-subtle-bg)]">
             <h2 class="section-heading">Skills & Expertise</h2>
             <div class="grid md:grid-cols-3 gap-8">
 
                 <!-- AI & Machine Learning -->
-                <div class="skill-group p-6 rounded-xl shadow-xl border border-[var(--color-accent)]/20">
+                <div class="skill-group p-6 rounded-xl">
                     <h3 class="text-2xl font-bold mb-4 accent-text">AI & LLMs</h3>
                     <div class="flex flex-wrap gap-3">
-                        <span class="skill-tag hover:bg-[var(--color-accent)] hover:text-white">AI Automation</span>
-                        <span class="skill-tag hover:bg-[var(--color-accent)] hover:text-white">Deep Learning (PyTorch)</span>
-                        <span class="skill-tag hover:bg-[var(--color-accent)] hover:text-white">LLM Integration (Gemini, OpenAI)</span>
-                        <span class="skill-tag hover:bg-[var(--color-accent)] hover:text-white">Fuzzy Matching</span>
-                        <span class="skill-tag hover:bg-[var(--color-accent)] hover:text-white">Sentence Transformers</span>
-                        <span class="skill-tag hover:bg-[var(--color-accent)] hover:text-white">Data Preprocessing (Pandas)</span>
+                        <span class="skill-tag">AI Automation</span>
+                        <span class="skill-tag">Deep Learning (PyTorch)</span>
+                        <span class="skill-tag">LLM Integration (Gemini, OpenAI)</span>
+                        <span class="skill-tag">Fuzzy Matching</span>
+                        <span class="skill-tag">Sentence Transformers</span>
+                        <span class="skill-tag">Data Preprocessing (Pandas)</span>
                     </div>
                 </div>
                 
                 <!-- Technical Skills -->
-                <div class="skill-group p-6 rounded-xl shadow-xl border border-[var(--color-accent)]/20">
+                <div class="skill-group p-6 rounded-xl">
                     <h3 class="text-2xl font-bold mb-4 accent-text">Full-Stack Development</h3>
                     <div class="flex flex-wrap gap-3">
-                        <span class="skill-tag hover:bg-[var(--color-accent)] hover:text-white">Python</span>
-                        <span class="skill-tag hover:bg-[var(--color-accent)] hover:text-white">Java (OOP)</span>
-                        <span class="skill-tag hover:bg-[var(--color-accent)] hover:text-white">JavaScript/Dart</span>
-                        <span class="skill-tag hover:bg-[var(--color-accent)] hover:text-white">Flutter & Django</span>
-                        <span class="skill-tag hover:bg-[var(--color-accent)] hover:text-white">FastAPI & RESTful APIs</span>
-                        <span class="skill-tag hover:bg-[var(--color-accent)] hover:text-white">SQL & PHP</span>
-                        <span class="skill-tag hover:bg-[var(--color-accent)] hover:text-white">Git/Version Control</span>
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">Java (OOP)</span>
+                        <span class="skill-tag">JavaScript/Dart</span>
+                        <span class="skill-tag">Flutter & Django</span>
+                        <span class="skill-tag">FastAPI & RESTful APIs</span>
+                        <span class="skill-tag">SQL & PHP</span>
+                        <span class="skill-tag">Git/Version Control</span>
                     </div>
                 </div>
 
                 <!-- Soft Skills & Management -->
-                <div class="skill-group p-6 rounded-xl shadow-xl border border-[var(--color-accent)]/20">
+                <div class="skill-group p-6 rounded-xl">
                     <h3 class="text-2xl font-bold mb-4 accent-text">Leadership & Soft Skills</h3>
                     <div class="flex flex-wrap gap-3">
-                        <span class="skill-tag hover:bg-[var(--color-accent)] hover:text-white">Project Management</span>
-                        <span class="skill-tag hover:bg-[var(--color-accent)] hover:text-white">Team Leadership</span>
-                        <span class="skill-tag hover:bg-[var(--color-accent)] hover:text-white">Effective Communication</span>
-                        <span class="skill-tag hover:bg-[var(--color-accent)] hover:text-white">Public Relations</span>
-                        <span class="skill-tag hover:bg-[var(--color-accent)] hover:text-white">Time Management</span>
+                        <span class="skill-tag">Project Management</span>
+                        <span class="skill-tag">Team Leadership</span>
+                        <span class="skill-tag">Effective Communication</span>
+                        <span class="skill-tag">Public Relations</span>
+                        <span class="skill-tag">Time Management</span>
                     </div>
                 </div>
             </div>
@@ -299,21 +259,21 @@
 
 
         <!-- 
-            3. Experience Section (SustainGo moved here)
+            3. Experience Section (Experience cards use the card background color)
         -->
-        <section id="experience" class="py-24 md:py-36 border-t border-[var(--color-card-bg)]">
+        <section id="experience" class="py-24 md:py-36 border-t border-[var(--color-subtle-bg)]">
             <h2 class="section-heading">Experience</h2>
 
             <div class="space-y-12">
                 
-                <!-- SustainGo (Mobile Application) - MOVED FROM PROJECTS, ADDED BUTTON -->
-                <div class="experience-card p-6 lg:p-10 rounded-xl shadow-xl border border-[var(--color-accent)]/10">
+                <!-- SustainGo (Mobile Application) -->
+                <div class="experience-card p-6 lg:p-10 rounded-xl">
                     <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
                         <h3 class="text-3xl font-bold accent-text mb-2">SustainGo (Mobile Application)</h3>
-                        <p class="text-sm font-medium text-[var(--color-subtle)]">Project Manager, Leader | 2023 - 2024</p>
+                        <p class="text-sm font-medium text-[var(--color-text-subtle)]">Project Manager, Leader | 2023 - 2024</p>
                     </div>
                     <p class="mb-6 text-lg">Led and managed the full development lifecycle for a food delivery application, overseeing the website, behaviorism, and API integration. This role emphasized technical leadership and cross-platform development.</p>
-                    <ul class="list-disc list-inside space-y-2 ml-4 text-[var(--color-subtle)] text-base">
+                    <ul class="list-disc list-inside space-y-2 ml-4 text-[var(--color-text-subtle)] text-base">
                         <li>Developed Front-End using <b>Flutter and Dart</b>.</li>
                         <li>Developed Back-End using <b>Django, SQL, and PHP</b>.</li>
                         <li>Designed and implemented robust <b>RESTful APIs</b> using FastAPI.</li>
@@ -327,7 +287,7 @@
 
                     <!-- GitHub Button -->
                     <div class="mt-6">
-                        <a href="#" target="_blank" class="flex items-center justify-center w-full py-2 px-4 bg-gray-700 text-white font-semibold rounded-lg hover:bg-gray-600 transition-colors">
+                        <a href="#" target="_blank" class="flex items-center justify-center w-full py-3 px-4 bg-[#2A4365] text-white font-semibold rounded-lg hover:bg-[#3B5A79] transition-colors">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="mr-2"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.805 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.334-1.758-1.334-1.758-1.087-.731.084-.678.084-.678 1.205.084 1.838 1.237 1.838 1.237 1.07 1.836 2.809 1.305 3.498.998.108-.77.422-1.305.762-1.604-2.665-.305-5.467-1.332-5.467-5.93 0-1.31.465-2.385 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.046.138 3.003.404 2.293-1.552 3.301-1.23 3.301-1.23.652 1.652.241 2.873.118 3.176.77.836 1.233 1.911 1.233 3.221 0 4.609-2.808 5.624-5.474 5.922.43.371.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.562 21.802 24 17.299 24 12c0-6.627-5.373-12-12-12z"/></svg>
                             GitHub Repository
                         </a>
@@ -336,12 +296,12 @@
 
 
                 <!-- Private Tutor Experience Card -->
-                <div class="experience-card p-6 lg:p-10 rounded-xl shadow-xl border border-[var(--color-accent)]/10">
+                <div class="experience-card p-6 lg:p-10 rounded-xl">
                     <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
                         <h3 class="text-3xl font-bold accent-text mb-2">Private Tutor for Mathematics & Physics</h3>
-                        <p class="text-sm font-medium text-[var(--color-subtle)]">Self-Employed | 2020 - 2022</p>
+                        <p class="text-sm font-medium text-[var(--color-text-subtle)]">Self-Employed | 2020 - 2022</p>
                     </div>
-                    <ul class="list-disc list-inside space-y-2 ml-4 text-[var(--color-subtle)] text-base">
+                    <ul class="list-disc list-inside space-y-2 ml-4 text-[var(--color-text-subtle)] text-base">
                         <li>Provided personalized one-to-one tutoring for approximately 10 hours weekly.</li>
                         <li>Successfully helped students improve failing grades and achieve success in challenging subjects.</li>
                         <li>Designed personalized lesson plans tailored to each student's unique needs and learning style.</li>
@@ -353,22 +313,22 @@
 
 
         <!-- 
-            4. Projects Section 
+            4. Projects Section (Project cards use the card background color)
         -->
-        <section id="projects" class="py-24 md:py-36 border-t border-[var(--color-card-bg)]">
+        <section id="projects" class="py-24 md:py-36 border-t border-[var(--color-subtle-bg)]">
             <h2 class="section-heading">Featured Projects</h2>
             
             <div class="space-y-12">
                 
                 <!-- Project 1: AlgebrAl (AI Automation) -->
-                <div class="project-card p-6 lg:p-10 rounded-xl shadow-xl border border-[var(--color-accent)]/10">
+                <div class="project-card p-6 lg:p-10 rounded-xl">
                     <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
                         <h3 class="text-3xl font-bold accent-text mb-2">AlgebrAl (AI Automation)</h3>
-                        <p class="text-sm font-medium text-[var(--color-subtle)]">AI-Powered WhatsApp Math Tutor</p>
+                        <p class="text-sm font-medium text-[var(--color-text-subtle)]">AI-Powered WhatsApp Math Tutor</p>
                     </div>
                     
                     <p class="mb-6 text-lg">A functional WhatsApp tutor that provides accurate, professional math answers in under 7 seconds. This project showcases practical AI integration and API management for instant, reliable service.</p>
-                    <ul class="list-disc list-inside space-y-2 ml-4 text-[var(--color-subtle)] text-base">
+                    <ul class="list-disc list-inside space-y-2 ml-4 text-[var(--color-text-subtle)] text-base">
                         <li>Integrated <b>OpenAI and Gemini LLMs</b> for core teaching intelligence and mathematical reasoning.</li>
                         <li>Managed <b>Twilio API/Webhooks</b> for instant, low-latency message delivery.</li>
                         <li>Implemented professional prompting and data filtering for high-reliability outputs.</li>
@@ -383,44 +343,43 @@
                     
                     <!-- GitHub Button -->
                     <div class="mt-6">
-                        <a href="#" target="_blank" class="flex items-center justify-center w-full py-2 px-4 bg-gray-700 text-white font-semibold rounded-lg hover:bg-gray-600 transition-colors">
+                        <a href="#" target="_blank" class="flex items-center justify-center w-full py-3 px-4 bg-[#2A4365] text-white font-semibold rounded-lg hover:bg-[#3B5A79] transition-colors">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="mr-2"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.805 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.334-1.758-1.334-1.758-1.087-.731.084-.678.084-.678 1.205.084 1.838 1.237 1.838 1.237 1.07 1.836 2.809 1.305 3.498.998.108-.77.422-1.305.762-1.604-2.665-.305-5.467-1.332-5.467-5.93 0-1.31.465-2.385 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.046.138 3.003.404 2.293-1.552 3.301-1.23 3.301-1.23.652 1.652.241 2.873.118 3.176.77.836 1.233 1.911 1.233 3.221 0 4.609-2.808 5.624-5.474 5.922.43.371.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.562 21.802 24 17.299 24 12c0-6.627-5.373-12-12-12z"/></svg>
                             GitHub Repository
                         </a>
                     </div>
 
                     <!-- Image Gallery -->
-                    <div class="mt-6 border-t pt-6 border-[var(--color-accent)]/10">
+                    <div class="mt-6 border-t pt-6" style="border-color: var(--color-subtle-bg);">
                         <h4 class="text-xl font-semibold mb-3">Screenshots & Workflow</h4>
                         <div class="grid grid-cols-2 gap-4">
+                            <!-- Using the uploaded images for AlgebrAl -->
                             <img 
-                                src="https://placehold.co/600x400/00C4CC/0D1117?text=AlgebrAl+Demo" 
-                                alt="AlgebrAl Demo Screenshot" 
+                                src="uploaded:demo algebrAI.jpg-a22711a8-6bb8-47e3-938b-e4b07488e6b4" 
+                                alt="AlgebrAl Demo Screenshot (WhatsApp Interface)" 
                                 class="w-full h-auto rounded-lg object-cover cursor-pointer hover:opacity-80 transition-opacity duration-300"
                                 onclick="openModal(this.src)"
-                                onerror="this.onerror=null; this.src='https://placehold.co/600x400/00C4CC/0D1117?text=AlgebrAl+Demo';"
                             >
                             <img 
-                                src="https://placehold.co/600x400/0D1117/00C4CC?text=AI+Workflow" 
+                                src="uploaded:workflow algebrAI.png-302af9d0-9314-4235-8470-0ab48fcf1736" 
                                 alt="AlgebrAl Workflow Diagram" 
                                 class="w-full h-auto rounded-lg object-cover cursor-pointer hover:opacity-80 transition-opacity duration-300"
                                 onclick="openModal(this.src)"
-                                onerror="this.onerror=null; this.src='https://placehold.co/600x400/0D1117/00C4CC?text=AI+Workflow';"
                             >
                         </div>
-                        <p class="text-xs text-[var(--color-subtle)] mt-2">Click images to enlarge. <span class="accent-text">Please replace these placeholders with your actual project images.</span></p>
+                        <p class="text-xs text-[var(--color-text-subtle)] mt-2">Click images to enlarge.</p>
                     </div>
                 </div>
 
                 <!-- Project 2: Recipe Generator (Deep Learning) -->
-                <div class="project-card p-6 lg:p-10 rounded-xl shadow-xl border border-[var(--color-accent)]/10">
+                <div class="project-card p-6 lg:p-10 rounded-xl">
                     <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
                         <h3 class="text-3xl font-bold accent-text mb-2">Recipe Generator (Deep Learning)</h3>
-                        <p class="text-sm font-medium text-[var(--color-subtle)]">Intelligent Recipe Generation based on user ingredients</p>
+                        <p class="text-sm font-medium text-[var(--color-text-subtle)]">Intelligent Recipe Generation based on user ingredients</p>
                     </div>
                     <p class="mb-6 text-lg">An application that instantly creates recipes from a user's list of ingredients, demonstrating expertise in managing large datasets and delivering a functional AI application.</p>
-                    <ul class="list-disc list-inside space-y-2 ml-4 text-[var(--color-subtle)] text-base">
-                        <li>Built the generation model with <b>PyTorch</b> after cleaning/preprocessing a dataset of 50,000+ recipes.</li>
+                    <ul class="list-disc list-inside space-y-2 ml-4 text-[var(--color-text-subtle)] text-base">
+                        <li>Built the generation model with <b>PyTorch</b> after cleaning/preprocessing a dataset of $50,000+$ recipes.</li>
                         <li>Utilized <b>Fuzzy Matching</b> and <b>Sentence Transformers</b> for accurate ingredient linking to the dataset.</li>
                         <li>Developed a clean, functional frontend interface using <b>Streamlit</b>.</li>
                     </ul>
@@ -435,43 +394,42 @@
 
                     <!-- GitHub Button -->
                     <div class="mt-6">
-                        <a href="#" target="_blank" class="flex items-center justify-center w-full py-2 px-4 bg-gray-700 text-white font-semibold rounded-lg hover:bg-gray-600 transition-colors">
+                        <a href="#" target="_blank" class="flex items-center justify-center w-full py-3 px-4 bg-[#2A4365] text-white font-semibold rounded-lg hover:bg-[#3B5A79] transition-colors">
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="mr-2"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.805 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.334-1.758-1.334-1.758-1.087-.731.084-.678.084-.678 1.205.084 1.838 1.237 1.838 1.237 1.07 1.836 2.809 1.305 3.498.998.108-.77.422-1.305.762-1.604-2.665-.305-5.467-1.332-5.467-5.93 0-1.31.465-2.385 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.046.138 3.003.404 2.293-1.552 3.301-1.23 3.301-1.23.652 1.652.241 2.873.118 3.176.77.836 1.233 1.911 1.233 3.221 0 4.609-2.808 5.624-5.474 5.922.43.371.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.562 21.802 24 17.299 24 12c0-6.627-5.373-12-12-12z"/></svg>
                             GitHub Repository
                         </a>
                     </div>
 
                     <!-- Image Gallery -->
-                    <div class="mt-6 border-t pt-6 border-[var(--color-accent)]/10">
+                    <div class="mt-6 border-t pt-6" style="border-color: var(--color-subtle-bg);">
                         <h4 class="text-xl font-semibold mb-3">Screenshots & UI</h4>
                         <div class="grid grid-cols-2 gap-4">
+                             <!-- Using the uploaded images for Recipe Generator -->
                             <img 
-                                src="https://placehold.co/600x400/00C4CC/0D1117?text=Input+Screen" 
+                                src="uploaded:input recipe.jpg-14f7eb01-7eb5-4175-9d9c-4215a364798b" 
                                 alt="Recipe Generator Input Screen" 
                                 class="w-full h-auto rounded-lg object-cover cursor-pointer hover:opacity-80 transition-opacity duration-300"
                                 onclick="openModal(this.src)"
-                                onerror="this.onerror=null; this.src='https://placehold.co/600x400/00C4CC/0D1117?text=Input+Screen';"
                             >
                             <img 
-                                src="https://placehold.co/600x400/0D1117/00C4CC?text=Output+Example" 
+                                src="uploaded:empty recipe.png-838120b7-07fa-442c-acaa-ee651d440460" 
                                 alt="Recipe Generator Output Example" 
                                 class="w-full h-auto rounded-lg object-cover cursor-pointer hover:opacity-80 transition-opacity duration-300"
                                 onclick="openModal(this.src)"
-                                onerror="this.onerror=null; this.src='https://placehold.co/600x400/0D1117/00C4CC?text=Output+Example';"
                             >
                         </div>
-                        <p class="text-xs text-[var(--color-subtle)] mt-2">Click images to enlarge. <span class="accent-text">Please replace these placeholders with your actual project images.</span></p>
+                        <p class="text-xs text-[var(--color-text-subtle)] mt-2">Click images to enlarge.</p>
                     </div>
                 </div>
 
-                <!-- Project 3: BeePro (Java OOP) - WITH Image Slots -->
-                <div class="project-card p-6 lg:p-10 rounded-xl shadow-xl border border-[var(--color-accent)]/10">
+                <!-- Project 3: BeePro (Java OOP) -->
+                <div class="project-card p-6 lg:p-10 rounded-xl">
                     <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
                         <h3 class="text-3xl font-bold accent-text mb-2">BeePro - Beekeeping Management System</h3>
-                        <p class="text-sm font-medium text-[var(--color-subtle)]">Java OOP Desktop Application</p>
+                        <p class="text-sm font-medium text-[var(--color-text-subtle)]">Java OOP Desktop Application</p>
                     </div>
                     <p class="mb-6 text-lg">A comprehensive desktop application built entirely with <b>Java</b> and strict <b>Object-Oriented Programming (OOP)</b> principles to help beekeepers manage and professionalize their operations, providing actionable business insights.</p>
-                    <ul class="list-disc list-inside space-y-2 ml-4 text-[var(--color-subtle)] text-base">
+                    <ul class="list-disc list-inside space-y-2 ml-4 text-[var(--color-text-subtle)] text-base">
                         <li>Built entirely using <b>Java</b> and strict <b>Object-Oriented Programming (OOP)</b> methodology.</li>
                         <li>Enables users to track revenue, profits, stock levels, and other key field-specific metrics.</li>
                     </ul>
@@ -482,39 +440,32 @@
                         <span class="skill-tag">Management System</span>
                     </div>
                     
-                    <!-- Image Gallery for BeePro (Kept from previous update) -->
-                    <div class="mt-6 border-t pt-6 border-[var(--color-accent)]/10">
+                    <!-- Image Gallery for BeePro -->
+                    <div class="mt-6 border-t pt-6" style="border-color: var(--color-subtle-bg);">
                         <h4 class="text-xl font-semibold mb-3">BeePro Screenshots & Features</h4>
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                             
-                            <!-- Image 1: Main Dashboard -->
+                            <!-- Placeholder Images for BeePro -->
                             <img 
-                                src="https://placehold.co/400x300/00C4CC/0D1117?text=1.+Main+Dashboard" 
+                                src="https://placehold.co/400x300/1A2E4B/74A9FF?text=1.+BeePro+Dashboard" 
                                 alt="BeePro Main Dashboard" 
                                 class="w-full h-auto rounded-lg object-cover cursor-pointer hover:opacity-80 transition-opacity duration-300"
                                 onclick="openModal(this.src)"
-                                onerror="this.onerror=null; this.src='https://placehold.co/400x300/00C4CC/0D1117?text=1.+Main+Dashboard';"
                             >
-                            
-                            <!-- Image 2: Stock & Inventory -->
                             <img 
-                                src="https://placehold.co/400x300/0D1117/00C4CC?text=2.+Stock+%26+Inventory" 
+                                src="https://placehold.co/400x300/1A2E4B/74A9FF?text=2.+Stock+%26+Inventory" 
                                 alt="BeePro Stock and Inventory" 
                                 class="w-full h-auto rounded-lg object-cover cursor-pointer hover:opacity-80 transition-opacity duration-300"
                                 onclick="openModal(this.src)"
-                                onerror="this.onerror=null; this.src='https://placehold.co/400x300/0D1117/00C4CC?text=2.+Stock+%26+Inventory';"
                             >
-
-                            <!-- Image 3: Financial Tracking -->
                             <img 
-                                src="https://placehold.co/400x300/00C4CC/0D1117?text=3.+Financial+Tracking" 
+                                src="https://placehold.co/400x300/1A2E4B/74A9FF?text=3.+Financial+Tracking" 
                                 alt="BeePro Financial Tracking" 
                                 class="w-full h-auto rounded-lg object-cover cursor-pointer hover:opacity-80 transition-opacity duration-300"
                                 onclick="openModal(this.src)"
-                                onerror="this.onerror=null; this.src='https://placehold.co/400x300/00C4CC/0D1117?text=3.+Financial+Tracking';"
                             >
                         </div>
-                        <p class="text-xs text-[var(--color-subtle)] mt-2">Click images to enlarge. <span class="accent-text">Please replace these placeholders with your actual project images.</span></p>
+                        <p class="text-xs text-[var(--color-text-subtle)] mt-2">Click images to enlarge. <span class="accent-text">Note: These are placeholders.</span></p>
                     </div>
                 </div>
             </div>
@@ -523,15 +474,15 @@
         <!-- 
             5. Contact Section 
         -->
-        <section id="contact" class="py-24 md:py-36 border-t border-[var(--color-card-bg)] text-center">
+        <section id="contact" class="py-24 md:py-36 border-t border-[var(--color-subtle-bg)] text-center">
             <h2 class="section-heading mx-auto w-fit">Get In Touch</h2>
-            <p class="text-xl mb-10 max-w-3xl mx-auto text-[var(--color-subtle)] text-center">
+            <p class="text-xl mb-10 max-w-3xl mx-auto text-[var(--color-text-subtle)] text-center">
                 I'm actively seeking roles in AI Automation and Full-Stack Development. Let's discuss how my technical leadership and expertise can drive your next project forward.
             </p>
             
             <!-- Centered the Email Button -->
             <div class="mb-12">
-                 <a href="mailto:nadimhamze3@gmail.com" class="inline-block py-4 px-10 bg-[var(--color-accent)] text-white text-xl font-bold rounded-full shadow-2xl transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_30px_rgba(0,196,204,0.7)]">
+                 <a href="mailto:nadimhamze3@gmail.com" class="inline-block py-4 px-10 bg-[var(--color-accent)] text-white text-xl font-bold rounded-full shadow-2xl transition-all duration-300 transform hover:scale-105" style="box-shadow: 0 0 30px rgba(116, 169, 255, 0.7);">
                     Send Me An Email
                 </a>
             </div>
@@ -539,22 +490,22 @@
             <!-- Social Links -->
             <div class="flex justify-center space-x-8">
                 <!-- Email Link -->
-                <a href="mailto:nadimhamze3@gmail.com" target="_blank" class="text-[var(--color-subtle)] hover:text-[var(--color-accent)] transition-colors transform hover:scale-110" title="Email">
+                <a href="mailto:nadimhamze3@gmail.com" target="_blank" class="text-[var(--color-text-subtle)] hover:text-[var(--color-accent)] transition-colors transform hover:scale-110" title="Email">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-9 h-9"><path d="M1.5 8.67v8.581a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3V8.67l-7.46 5.812a4.5 4.5 0 0 1-5.58 0L1.5 8.67ZM4.5 5.25a3 3 0 0 0-3 3v.375h21v-.375a3 3 0 0 0-3-3H4.5Z" /></svg>
                 </a>
                 
                 <!-- Phone Link -->
-                <a href="tel:+96176942377" class="text-[var(--color-subtle)] hover:text-[var(--color-accent)] transition-colors transform hover:scale-110" title="Phone">
+                <a href="tel:+96176942377" class="text-[var(--color-text-subtle)] hover:text-[var(--color-accent)] transition-colors transform hover:scale-110" title="Phone">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-9 h-9"><path fill-rule="evenodd" d="M1.5 4.5a3 3 0 0 1 3-3h1.375a3 3 0 0 1 3 3v.265a3 3 0 0 0 .91 2.145l2.427 2.426a1.5 1.5 0 0 0 2.121 0l.507-.507c.325-.325.766-.507 1.227-.507H20.25a.75.75 0 0 1 0 1.5h-3.646l.507.507a3 3 0 0 1 0 4.242L12.56 19.46a3 3 0 0 1-4.242 0l-2.426-2.427a3 3 0 0 0-2.145-.91h-.265a3 3 0 0 1-3-3V4.5Zm6.75-1.5a1.5 1.5 0 0 0-1.5 1.5v3.646a1.5 1.5 0 0 0 .44 1.06l2.427 2.427a1.5 1.5 0 0 0 2.12 0l2.427-2.427a1.5 1.5 0 0 0 .44-1.06V4.5a1.5 1.5 0 0 0-1.5-1.5h-5.25Zm8.25 7.5h.75a1.5 1.5 0 0 0 1.5-1.5V4.5a1.5 1.5 0 0 0-1.5-1.5h-1.375a1.5 1.5 0 0 0-1.5 1.5V11.25a.75.75 0 0 1 1.5 0Z" clip-rule="evenodd" /></svg>
                 </a>
                 
                 <!-- LinkedIn Placeholder - Update with your real link -->
-                <a href="#" target="_blank" class="text-[var(--color-subtle)] hover:text-[var(--color-accent)] transition-colors transform hover:scale-110" title="LinkedIn (Placeholder)">
+                <a href="#" target="_blank" class="text-[var(--color-text-subtle)] hover:text-[var(--color-accent)] transition-colors transform hover:scale-110" title="LinkedIn (Placeholder)">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-9 h-9"><path d="M4.98 3.5c0 1.381 1.119 2.5 2.5 2.5s2.5-1.119 2.5-2.5-1.119-2.5-2.5-2.5-2.5 1.119-2.5 2.5zm-.056 20.5h4.98v-16h-4.98v16zm11.08 0h4.98v-10.3c0-2.614-1.396-4.6-3.876-4.6-1.802 0-2.673 1.036-3.117 1.954v-1.654h-4.98v16h4.98v-8.799c0-.466.034-.93.168-1.26a2.126 2.126 0 0 1 1.984-.803c1.397 0 1.838 1.065 1.838 2.62v8.237z"/></svg>
                 </a>
                 
                 <!-- GitHub Placeholder - Update with your real link -->
-                <a href="#" target="_blank" class="text-[var(--color-subtle)] hover:text-[var(--color-accent)] transition-colors transform hover:scale-110" title="GitHub (Placeholder)">
+                <a href="#" target="_blank" class="text-[var(--color-text-subtle)] hover:text-[var(--color-accent)] transition-colors transform hover:scale-110" title="GitHub (Placeholder)">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-9 h-9"><path fill-rule="evenodd" d="M12 2.25a9.75 9.75 0 0 0-6.002 1.942.75.75 0 0 0-.008 1.137 9.75 9.75 0 0 0 6.01 16.421 9.75 9.75 0 0 0 6.002-1.942.75.75 0 0 0 .008-1.137 9.75 9.75 0 0 0-6.01-16.421Z" clip-rule="evenodd" /><path d="M10.25 18.75a.75.75 0 0 0 .75-.75v-6a.75.75 0 0 0-1.5 0v6c0 .414.336.75.75.75ZM13.75 18.75a.75.75 0 0 0 .75-.75v-6a.75.75 0 0 0-1.5 0v6c0 .414.336.75.75.75Z" /></svg>
                 </a>
             </div>
@@ -563,7 +514,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="py-10 border-t border-[var(--color-card-bg)] text-center text-sm text-[var(--color-subtle)] bg-[var(--color-bg-primary)]">
+    <footer class="py-10 border-t text-center text-sm text-[var(--color-text-subtle)]" style="border-color: var(--color-subtle-bg); background-color: var(--color-bg-primary);">
         <p>&copy; <script>document.write(new Date().getFullYear())</script> Nadim Hamzeh. All rights reserved. | Built with modern design principles and Tailwind CSS.</p>
     </footer>
 
