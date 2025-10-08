@@ -67,6 +67,55 @@
         .dark-mode .text-gray-500 { color: #6b7280 !important; }
         .dark-mode .accent-bg { background-color: #6366F1 !important; } /* Medium Indigo (Tailwind indigo-500) */
         .dark-mode .accent-text { color: #C4B5FD !important; } /* Light Violet (Tailwind violet-300) */
+
+        /* --- NEW: Lightbox Modal Styles --- */
+        #lightbox-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9); /* Dark overlay */
+            z-index: 9999; /* Above everything */
+            display: none; /* Hidden by default */
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            cursor: pointer; /* Indicate it's clickable to close */
+        }
+        #lightbox-content {
+            max-width: 90vw;
+            max-height: 90vh;
+            position: relative;
+        }
+        #lightbox-img {
+            display: block;
+            width: auto;
+            max-width: 100%;
+            max-height: 90vh; /* Adjusted to respect viewport height */
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+        #lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+            text-shadow: 0 0 5px black;
+            transition: color 0.2s ease;
+        }
+        #lightbox-close:hover {
+            color: #d1d5db;
+        }
+        /* Make clickable images indicate interactability */
+        .enlargeable-img {
+            cursor: zoom-in;
+        }
     </style>
 </head>
 <body class="text-gray-800">
@@ -151,14 +200,14 @@
                         <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4">
                             <!-- Image 1: WhatsApp Demo -->
                             <div class="border border-gray-200 rounded-lg p-2 bg-gray-50 flex flex-col items-center">
-                                <!-- CORRECTED: Referenced uploaded image using its contentFetchId -->
-                                <img src="demo.png" alt="WhatsApp Demo of AlgebrAl showing PEMDAS steps" class="w-full h-auto max-h-96 object-contain rounded-md shadow-md">
+                                <!-- ADDED: enlargeable-img class -->
+                                <img src="demo.png" alt="WhatsApp Demo of AlgebrAl showing PEMDAS steps" class="w-full h-auto max-h-96 object-contain rounded-md shadow-md enlargeable-img">
                                 <p class="text-center text-sm text-gray-600 mt-2 font-medium">Live WhatsApp Demo & Step-by-step Solution</p>
                             </div>
                             <!-- Image 2: Workflow Diagram -->
                             <div class="border border-gray-200 rounded-lg p-2 bg-gray-50 flex flex-col items-center">
-                                <!-- CORRECTED: Referenced uploaded image using its contentFetchId -->
-                                <img src="workflowalgebrai.png" alt="AlgebrAl Automation Workflow Diagram" class="w-full h-auto max-h-96 object-contain rounded-md shadow-md">
+                                <!-- ADDED: enlargeable-img class -->
+                                <img src="workflowalgebrai.png" alt="AlgebrAl Automation Workflow Diagram" class="w-full h-auto max-h-96 object-contain rounded-md shadow-md enlargeable-img">
                                 <p class="text-center text-sm text-gray-600 mt-2 font-medium">Automation Workflow (Make, HTTP, Twilio)</p>
                             </div>
                         </div>
@@ -191,14 +240,14 @@
                         <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4">
                             <!-- Image 1: Empty Recipe Interface (Before Input) -->
                             <div class="border border-gray-200 rounded-lg p-2 bg-gray-50 flex flex-col items-center">
-                                <!-- CORRECTED: Referenced uploaded image using its contentFetchId -->
-                                <img src="emptyrecipe.png" alt="Empty Recipe Generator input screen" class="w-full h-auto max-h-96 object-contain rounded-md shadow-md">
+                                <!-- ADDED: enlargeable-img class -->
+                                <img src="emptyrecipe.png" alt="Empty Recipe Generator input screen" class="w-full h-auto max-h-96 object-contain rounded-md shadow-md enlargeable-img">
                                 <p class="text-center text-sm text-gray-600 mt-2 font-medium">Initial Interface: Ready for Ingredient Input</p>
                             </div>
                             <!-- Image 2: Input Recipe Results -->
                             <div class="border border-gray-200 rounded-lg p-2 bg-gray-50 flex flex-col items-center">
-                                <!-- CORRECTED: Referenced uploaded image using its contentFetchId -->
-                                <img src="inputrecipe.png" alt="Recipe Generator showing results for cheese tomato chicken" class="w-full h-auto max-h-96 object-contain rounded-md shadow-md">
+                                <!-- ADDED: enlargeable-img class -->
+                                <img src="inputrecipe.png" alt="Recipe Generator showing results for cheese tomato chicken" class="w-full h-auto max-h-96 object-contain rounded-md shadow-md enlargeable-img">
                                 <p class="text-center text-sm text-gray-600 mt-2 font-medium">Output: Semantic Search Results from Ingredients</p>
                             </div>
                         </div>
@@ -206,23 +255,48 @@
                 </div> <!-- End Recipe Generator card -->
 
 
-                <!-- Project 3: BeePro (Now moves down to occupy one column) -->
-                <div class="project-card bg-white p-6 rounded-xl shadow-lg border border-gray-100 flex flex-col md:col-span-1">
-                    <h3 class="text-2xl font-semibold accent-text mb-2">BeePro - Beekeeping Management</h3>
+                <!-- Project 3: BeePro (MODIFIED TO SPAN 3 COLUMNS AND INCLUDE 3 IMAGE SLOTS) -->
+                <div class="project-card bg-white p-6 rounded-xl shadow-2xl border border-gray-200 flex flex-col md:col-span-3">
+                    <h3 class="text-3xl font-extrabold accent-text mb-2">BeePro - Beekeeping Management</h3>
                     <p class="text-sm text-gray-500 mb-4">Java OOP Desktop Application</p>
-                    <p class="text-gray-600 mb-4 flex-grow">A comprehensive desktop application designed to support beekeepers in managing and professionalizing their operations through object-oriented principles.</p>
-                    <ul class="list-disc list-inside text-sm text-gray-700 ml-4 space-y-1">
-                        <li>Built entirely using **Java** and **OOP** principles.</li>
-                        <li>Tracks revenue, profits, stock levels, and field-specific metrics.</li>
-                        <li>Provides actionable business insights for performance.</li>
-                    </ul>
-                    <div class="mt-4 pt-4 border-t border-gray-100">
-                        <p class="text-xs font-medium text-gray-500">Tech: Java, Object-Oriented Programming (OOP)</p>
+                    
+                    <!-- Content and Visuals in a flexible layout -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Text Content -->
+                        <div class="lg:col-span-1 flex flex-col justify-between">
+                            <div>
+                                <p class="text-gray-600 mb-4">A comprehensive desktop application designed to support beekeepers in managing and professionalizing their operations through object-oriented principles.</p>
+                                <ul class="list-disc list-inside text-sm text-gray-700 ml-4 space-y-1">
+                                    <li>Built entirely using **Java** and **OOP** principles.</li>
+                                    <li>Tracks revenue, profits, stock levels, and field-specific metrics.</li>
+                                    <li>Provides actionable business insights for performance.</li>
+                                </ul>
+                            </div>
+                            <div class="mt-4 pt-4 border-t border-gray-100">
+                                <p class="text-xs font-medium text-gray-500">Tech: Java, Object-Oriented Programming (OOP)</p>
+                            </div>
+                        </div>
+
+                        <!-- Visuals (spanning 2 columns on large screens) - 3 Image Slots Added Here -->
+                        <div class="lg:col-span-2 grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <!-- Image 1: Placeholder for BeePro Dashboard -->
+                            <div class="border border-gray-200 rounded-lg p-2 bg-gray-50 flex flex-col items-center">
+                                <img src="https://placehold.co/400x300/e0f2fe/0c4a6e?text=BeePro+Dashboard+UI" alt="BeePro Dashboard Screenshot" class="w-full h-auto max-h-96 object-contain rounded-md shadow-md enlargeable-img">
+                                <p class="text-center text-sm text-gray-600 mt-2 font-medium">Dashboard Overview</p>
+                            </div>
+                            <!-- Image 2: Placeholder for Inventory Management -->
+                            <div class="border border-gray-200 rounded-lg p-2 bg-gray-50 flex flex-col items-center">
+                                <img src="https://placehold.co/400x300/e0f2fe/0c4a6e?text=BeePro+Inventory" alt="BeePro Inventory Screen" class="w-full h-auto max-h-96 object-contain rounded-md shadow-md enlargeable-img">
+                                <p class="text-center text-sm text-gray-600 mt-2 font-medium">Inventory & Stock Tracking</p>
+                            </div>
+                            <!-- Image 3: Placeholder for Financial Reports -->
+                            <div class="border border-gray-200 rounded-lg p-2 bg-gray-50 flex flex-col items-center">
+                                <img src="https://placehold.co/400x300/e0f2fe/0c4a6e?text=BeePro+Reports" alt="BeePro Financial Reports" class="w-full h-auto max-h-96 object-contain rounded-md shadow-md enlargeable-img">
+                                <p class="text-center text-sm text-gray-600 mt-2 font-medium">Revenue & Metrics Reports</p>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                
-                <!-- Placeholder for layout alignment on desktop (only 3 columns total) -->
-                <div class="hidden md:block md:col-span-2"></div>
+                </div> <!-- End BeePro card -->
 
 
             </div>
@@ -329,8 +403,8 @@
                     </div>
 
                     <div class="mt-8">
-                         <h3 class="text-xl font-semibold accent-text mb-1">Languages</h3>
-                         <p class="text-lg text-gray-700">Fluent in English, Arabic, and French.</p>
+                        <h3 class="text-xl font-semibold accent-text mb-1">Languages</h3>
+                        <p class="text-lg text-gray-700">Fluent in English, Arabic, and French.</p>
                     </div>
                 </div>
             </div>
@@ -350,6 +424,14 @@
     <button id="scrollToTopBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white p-4 rounded-full shadow-xl transition duration-300 focus:outline-none">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
     </button>
+
+    <!-- NEW: Image Enlargement Modal (Lightbox) -->
+    <div id="lightbox-modal">
+        <span id="lightbox-close">&times;</span>
+        <div id="lightbox-content">
+            <img id="lightbox-img" src="" alt="Enlarged Image">
+        </div>
+    </div>
 
     <!-- JavaScript for Dynamic Features -->
     <script>
@@ -452,6 +534,48 @@
             section.classList.add('section-hidden');
             observer.observe(section);
         });
+
+        // --- 5. NEW: Image Enlargement (Lightbox) ---
+        const lightboxModal = document.getElementById('lightbox-modal');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxClose = document.getElementById('lightbox-close');
+
+        // Function to set up image listeners
+        function setupImageEnlargement() {
+            document.querySelectorAll('.enlargeable-img').forEach(img => {
+                img.addEventListener('click', function(e) {
+                    e.stopPropagation(); // Prevent card hover effect from interfering
+                    lightboxModal.style.display = 'flex';
+                    lightboxImg.src = this.src;
+
+                    // This check dynamically handles dark mode for the overlay
+                    if (body.classList.contains('dark-mode')) {
+                        lightboxModal.style.backgroundColor = 'rgba(0, 0, 0, 0.95)';
+                    } else {
+                        lightboxModal.style.backgroundColor = 'rgba(0, 0, 0, 0.9)';
+                    }
+                });
+            });
+        }
+
+        // Close modal when close button is clicked
+        lightboxClose.addEventListener('click', (e) => {
+            e.stopPropagation();
+            lightboxModal.style.display = 'none';
+            lightboxImg.src = '';
+        });
+
+        // Close modal when clicking outside the image (on the overlay)
+        lightboxModal.addEventListener('click', (e) => {
+            // Only close if the click is directly on the modal container, not the image itself
+            if (e.target.id === 'lightbox-modal' || e.target.id === 'lightbox-close') {
+                lightboxModal.style.display = 'none';
+                lightboxImg.src = '';
+            }
+        });
+
+        // Wait until the page is fully loaded to ensure all images are present before attaching listeners
+        window.addEventListener('load', setupImageEnlargement);
 
     </script>
 
