@@ -166,25 +166,24 @@
     <main class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl pb-24">
 
         <!-- 
-            0. Hero Section
-        -->
-        <section id="hero" class="pt-24 md:pt-40 min-h-[90vh] flex flex-col justify-center text-center">
-            <p class="text-5xl font-semibold accent-text mb-4 uppercase tracking-widest"> Nadim Hamzeh</p>
-             <!-- NEW: Image (Profile Picture) and Title Container. Uses flex for side-by-side layout on desktop and stacked on mobile. -->
+          <section id="hero" class="pt-24 md:pt-40 min-h-[90vh] flex flex-col justify-center text-center">
+            
+            <!-- FIXED: Line 1: The introductory name or greeting - Made larger -->
+            <p class="text-3xl sm:text-5xl lg:text-6xl font-extrabold accent-text mb-4 uppercase tracking-widest">Nadim Hamzeh</p>
+            
+            <!-- Image (Profile Picture) and H1 Title Container. -->
             <div class="flex flex-col md:flex-row items-center justify-center mb-6">
-                <!-- Profile Picture Placeholder -->
+                <!-- Profile Picture (using your provided image source) -->
                 <div class="mb-4 md:mb-0 md:mr-6 w-32 h-32 md:w-40 md:h-40 bg-[var(--color-accent)] rounded-full flex items-center justify-center p-1.5 quick-facts-card overflow-hidden shrink-0">
-                    <!-- Placeholder SVG Icon: A simple user icon -->
                    <img src="nadimhamzeh.jpg" alt="Nadim Hamzeh Profile Picture" class="w-full h-full object-cover rounded-full">
-                    <!-- To use a real image, replace the SVG with: 
-                    <img src="path/to/your/image.jpg" alt="Nadim Hamzeh Profile Picture" class="w-full h-full object-cover rounded-full">
-                    -->
                 </div>
+                
+                <!-- FIXED: Main Title Text (H1) - Made smaller and slightly less aggressive leading -->
+                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-snug text-[var(--color-text-primary)] text-center md:text-left">
+                    <span class="accent-text">AI Automation</span> | Software Development
+                </h1>
             </div>
-        </p>
-            <h2 class="text-xl sm:text-xl lg:text-[6rem] font-extrabold mb-6 leading-tight text-[var(--color-text-primary)]">
-                <span class="accent-text">AI Automation | Software Development</span>
-            </h2>
+
             <p class="text-2xl sm:text-3xl font-light mb-10 text-[var(--color-text-subtle)] max-w-3xl mx-auto">
                 Transforming complex challenges into scalable, elegant software solutions.
             </p>
