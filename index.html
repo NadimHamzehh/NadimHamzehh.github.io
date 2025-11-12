@@ -113,6 +113,15 @@
             width: 24px;
             height: 24px;
         }
+
+        /* Ensure hero avatar stays perfectly centered */
+        #hero .avatar { 
+          margin-left: auto; 
+          margin-right: auto; 
+          display: flex; 
+          justify-content: center; 
+          align-items: center;
+        }
         
     </style>
 </head>
@@ -177,7 +186,7 @@
             </p>
             
             <!-- Line 2: Profile Picture (Now centered and standalone, slightly increased size) -->
-            <div class="mx-auto mb-6 w-40 h-40 md:w-48 md:h-48 bg-[var(--color-accent)] rounded-full flex items-center justify-center p-2 quick-facts-card overflow-hidden shrink-0">
+            <div class="avatar mx-auto mb-6 w-40 h-40 md:w-48 md:h-48 bg-[var(--color-accent)] rounded-full flex items-center justify-center p-2 quick-facts-card overflow-hidden shrink-0">
                <!-- Make sure to replace 'nadimhamzeh.jpg' with the actual path or uploaded file name if you use this outside the context of the larger file. -->
                <img src="nadimhamzeh.jpg" alt="Nadim Hamzeh Profile Picture" class="w-full h-full object-cover rounded-full">
             </div>
@@ -196,6 +205,10 @@
                 </a>
                 <a href="#contact" class="py-3 px-8 border-2 border-[var(--color-accent)] text-[var(--color-accent)] font-bold text-lg rounded-full hover:bg-[var(--color-accent)] hover:text-white transition-all duration-300 transform hover:scale-105">
                     Contact Me
+                </a>
+                <a href="Nadim_Hamzeh_CV.pdf" download
+                   class="py-3 px-8 border-2 border-[var(--color-accent)] text-[var(--color-accent)] font-bold text-lg rounded-full hover:bg-[var(--color-accent)] hover:text-white transition-all duration-300 transform hover:scale-105">
+                   Download CV
                 </a>
             </div>
         </section>
@@ -362,7 +375,6 @@
                     <div class="mt-6 border-t pt-6" style="border-color: var(--color-subtle-bg);">
                         <h4 class="text-xl font-semibold mb-3">Screenshots & Workflow</h4>
                         <div class="grid grid-cols-2 gap-4">
-                            <!-- Using the uploaded images for AlgebrAl -->
                             <img 
                                 src="demo.png" 
                                 alt="AlgebrAl Demo Screenshot (WhatsApp Interface)" 
