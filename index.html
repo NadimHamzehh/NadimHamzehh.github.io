@@ -1,550 +1,488 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nadim Hamzeh | AI Automation & Full Stack</title>
-    <!-- Load Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Use Inter font -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <title>Nadim Hamzeh | Dynamic Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        /* --- COLOR PALETTE: Deep Blue / Light Blue Accent (Based on your preference) --- */
-        
-        /* Define the deep blue color theme variables */
+        /* --- 1. Global & Utility Styles --- */
         :root {
-            --color-bg-primary: #0A192F; /* Deep Navy (Main Background) */
-            --color-text-primary: white; /* Near White */
-            --color-accent: #74A9FF; /* Bright Blue/Light Blue */
-            --color-card-bg: #1A2E4B; /* Card/Block Background (Slight contrast) */
-            --color-subtle-bg: #2A4365; /* Subtle Background for borders/details */
-            --color-text-subtle: #BCCCDC; /* Light Blue-Gray for tertiary text */
+            --primary-color: #007bff; /* Vibrant Blue */
+            --secondary-color: #6c757d; /* Muted Grey */
+            --background-light: #f8f9fa;
+            --background-dark: #343a40;
+            --text-dark: #212529;
+            --text-light: #ffffff;
+            --section-padding: 80px 0;
+            --transition-speed: 0.4s;
         }
-        
-        /* Global Defaults */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--color-bg-primary);
-            color: var(--color-text-primary);
-            transition: background-color 0.4s, color 0.4s;
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-dark);
+            line-height: 1.6;
+            background-color: var(--background-light);
         }
 
-        /* Scrollbar Styling */
-        body::-webkit-scrollbar { width: 8px; }
-        body::-webkit-scrollbar-track { background: var(--color-bg-primary); }
-        body::-webkit-scrollbar-thumb { background-color: var(--color-accent); border-radius: 20px; border: 2px solid var(--color-bg-primary); }
-        
-        /* --- HEADING STYLE --- */
-        .section-heading {
-            /* Use linear gradient for a modern text effect */
-            background-image: linear-gradient(to right, var(--color-accent), var(--color-text-primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            
+        a {
+            text-decoration: none;
+            color: var(--primary-color);
+            transition: color var(--transition-speed);
+        }
+
+        a:hover {
+            color: #0056b3;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        section {
+            padding: var(--section-padding);
+            opacity: 0; /* Default hidden state for JS reveal */
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            text-align: center;
+            color: var(--text-dark);
             position: relative;
-            display: inline-block; 
-            width: fit-content;
-            margin-bottom: 3rem; 
-            font-size: 2.5rem; 
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 0.1em; 
-            line-height: 1; 
         }
 
-        /* Underline Separator */
-        .section-heading::after {
+        h2::after {
             content: '';
-            position: absolute;
-            bottom: -10px; 
-            left: 0;
-            width: 50%; 
-            max-width: 100px;
-            height: 4px;
-            background-color: var(--color-accent);
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: var(--primary-color);
+            margin: 10px auto 0;
             border-radius: 2px;
         }
-        
-        /* Center the heading for the Contact section */
-        #contact .section-heading {
-             margin-left: auto;
-             margin-right: auto;
-        }
-        #contact .section-heading::after {
-            left: 50%;
-            transform: translateX(-50%);
+
+        /* --- 2. Header & Navigation --- */
+        header {
+            background-color: var(--text-light);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: sticky; /* Make it sticky */
+            top: 0;
+            z-index: 1000;
+            transition: background-color 0.3s;
         }
 
-        .accent-text {
-            color: var(--color-accent);
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
         }
 
-        /* --- CARD & INTERACTION STYLES --- */
-        
-        .project-card, .skill-group, .experience-card, .quick-facts-card {
-            background-color: var(--color-card-bg); /* Use the slightly lighter blue */
-            transition: all 0.3s ease-in-out;
-            border: 1px solid var(--color-subtle-bg); /* Use the subtle background for the border */
-            border-radius: 0.75rem; /* rounded-xl */
-        }
-        
-        /* Card Hover Effect: Subtle Glow/Border remains the primary way to define the block */
-        .project-card:hover, .experience-card:hover {
-            box-shadow: 0 0 15px rgba(116, 169, 255, 0.7), 0 0 30px rgba(116, 169, 255, 0.4);
-            border-color: var(--color-accent); 
-            transform: translateY(-4px); 
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-dark);
         }
 
-        /* Helper class for skill tags */
-        .skill-tag {
-            @apply text-sm font-medium py-1 px-3 rounded-full transition-all duration-200;
-            border: 1px solid var(--color-accent);
-            color: var(--color-accent);
-            background-color: var(--color-subtle-bg); /* Subtle blue background for tags */
+        .nav-links {
+            list-style: none;
+            display: flex;
         }
-        .skill-tag:hover {
-            background-color: var(--color-accent);
-            color: var(--color-bg-primary); /* Dark text on hover for contrast */
+
+        .nav-links li {
+            margin-left: 30px;
         }
-        
-        /* Light/Dark Mode Toggle Icon Style (Not implemented but good to keep structure clean) */
-        #mode-toggle-icon {
+
+        .nav-links a {
+            font-weight: 600;
+            color: var(--secondary-color);
+            padding: 5px 0;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-color);
+            transition: width var(--transition-speed);
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+
+        /* --- 3. Hero Section --- */
+        #hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0056b3 100%);
+            color: var(--text-light);
+            text-align: center;
+            padding: 120px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+        }
+
+        #hero p {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-bottom: 30px;
+        }
+
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 20px;
+        }
+
+        /* --- 4. Portfolio Grid (Projects) --- */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            background: var(--text-light);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .project-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .project-info {
+            padding: 20px;
+        }
+
+        .project-info h3 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .project-info p {
+            font-size: 0.95rem;
+            color: var(--secondary-color);
+        }
+
+        /* --- 5. CV Download Section (Re-used/Adapted from previous solution) --- */
+        .cv-download-section {
+            text-align: center;
+            padding: 40px 30px;
+            border-radius: 12px;
+            background-color: var(--text-light);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            max-width: 600px;
+            margin: 50px auto;
+        }
+
+        .cv-download-section h3 {
+            font-size: 1.8em;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .cv-download-section p {
+            font-size: 1.1em;
+            color: var(--secondary-color);
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .download-button {
+            display: inline-block;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            font-weight: 700;
+            text-decoration: none;
+            color: var(--text-light);
+            background-color: var(--primary-color);
+            border: none;
+            border-radius: 8px;
             cursor: pointer;
-            width: 24px;
-            height: 24px;
+            transition: all var(--transition-speed) ease;
+            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3);
         }
 
-        /* Ensure hero avatar stays perfectly centered */
-        #hero .avatar { 
-          margin-left: auto; 
-          margin-right: auto; 
-          display: flex; 
-          justify-content: center; 
-          align-items: center;
+        .download-button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 123, 255, 0.4);
         }
-        
+
+        .download-button::before {
+            content: '⬇️ ';
+            margin-right: 8px;
+        }
+
+
+        /* --- 6. Contact Section --- */
+        #contact .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        #contact input, #contact textarea {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        #contact input:focus, #contact textarea:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+
+        #contact textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .submit-button {
+            background-color: var(--primary-color);
+            color: var(--text-light);
+            border: none;
+            padding: 15px;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .submit-button:hover {
+            background-color: #0056b3;
+            transform: translateY(-1px);
+        }
+
+        /* --- 7. Footer --- */
+        footer {
+            text-align: center;
+            padding: 25px 0;
+            background-color: var(--background-dark);
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+        }
+
+        /* --- Media Queries for Responsiveness --- */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+            }
+
+            .nav-links {
+                margin-top: 10px;
+            }
+
+            .nav-links li {
+                margin: 0 10px;
+            }
+
+            #hero h1 {
+                font-size: 2.5rem;
+            }
+        }
     </style>
 </head>
-<body class="transition-colors duration-300">
+<body>
 
-    <!-- Full-Screen Image Modal / Lightbox for Enlargement -->
-    <div id="image-modal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-90 flex justify-center items-center p-4 transition-opacity duration-300" onclick="closeModal()">
-        <div class="max-w-4xl max-h-[90vh] mx-auto relative" onclick="event.stopPropagation()">
-            <!-- Close button (X) -->
-            <button onclick="closeModal()" class="absolute top-4 right-4 text-white text-4xl font-light opacity-80 hover:opacity-100 z-50">&times;</button>
-            <img id="modal-image" src="" alt="Enlarged Project Screenshot" class="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl">
-        </div>
-    </div>
-
-    <!-- JavaScript for Lightbox -->
-    <script>
-        // --- Lightbox/Modal Logic ---
-        function openModal(imageSrc) {
-            const modal = document.getElementById('image-modal');
-            const modalImage = document.getElementById('modal-image');
-            modalImage.src = imageSrc;
-            modal.classList.remove('hidden');
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('image-modal');
-            modal.classList.add('hidden');
-        }
-    </script>
-    
-    <!-- 
-        Sticky Header/Navigation 
-    -->
-    <header class="sticky top-0 z-50 py-4 backdrop-blur-md bg-opacity-90 transition-colors duration-300" style="background-color: var(--color-bg-primary);">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center max-w-5xl">
-            <a href="#hero" class="text-xl font-extrabold hover:opacity-80 transition-opacity">Nadim <span class="accent-text">Hamzeh</span></a>
-            <nav class="hidden md:flex space-x-8 text-lg font-medium">
-                <a href="#about" class="hover:text-[var(--color-accent)] transition-colors">About</a>
-                <a href="#skills" class="hover:text-[var(--color-accent)] transition-colors">Skills</a>
-                <a href="#experience" class="hover:text-[var(--color-accent)] transition-colors">Experience</a>
-                <a href="#projects" class="hover:text-[var(--color-accent)] transition-colors">Projects</a>
-                <a href="#contact" class="hover:text-[var(--color-accent)] transition-colors">Contact</a>
+    <header id="main-header">
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">Nadim Hamzeh</div>
+                <ul class="nav-links">
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="#about">About Me</a></li>
+                    <li><a href="#portfolio">Portfolio</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
             </nav>
-            <!-- Mode Toggle Placeholder (removed the functionality but kept the space clean) -->
-            <div id="mode-toggle-icon" class="text-[var(--color-text-primary)]">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path fill-rule="evenodd" d="M9.52 2.306a.75.75 0 0 1 .484.704v1.2a.75.75 0 0 1-.848.736A10.323 10.323 0 0 0 3 14.175V17.5a.75.75 0 0 0 1.5 0v-2.003c4.132 2.298 8.875 1.701 12.336-1.86a.75.75 0 1 0-1.026-1.12c-3.14 3.208-7.794 3.424-11.233 1.096a.75.75 0 0 1-.722-.511l-.816-1.722a.75.75 0 0 1-.035-.14 8.82 8.82 0 0 1 4.502-12.083h-.001ZM18.5 12a.75.75 0 0 0 0 1.5h2.25a.75.75 0 0 0 0-1.5h-2.25ZM12 18.5a.75.75 0 0 0 0 1.5h.008a.75.75 0 0 0 0-1.5H12ZM4.5 12a.75.75 0 0 0 0 1.5h2.25a.75.75 0 0 0 0-1.5H4.5ZM17.268 5.732a.75.75 0 0 0 .53-.22l1.272-1.273a.75.75 0 1 0-1.06-1.06l-1.273 1.272a.75.75 0 0 0 .53.22ZM5.732 17.268a.75.75 0 0 0 .22.53l1.272 1.272a.75.75 0 0 0 1.06-1.06l-1.273-1.272a.75.75 0 0 0-.53.22ZM12 5.25a6.75 6.75 0 0 1 6.75 6.75 6.75 6.75 0 0 1-6.75 6.75 6.75 6.75 0 0 1-6.75-6.75A6.75 6.75 0 0 1 12 5.25ZM6.732 6.732a.75.75 0 0 0 .22.53l1.272 1.272a.75.75 0 0 0 1.06-1.06l-1.273-1.272a.75.75 0 0 0-.53.22Z" clip-rule="evenodd" /></svg>
-            </div>
         </div>
     </header>
 
-    <main class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-5xl pb-24">
+    <section id="hero" class="visible">
+        <div class="container">
+            <img src="path/to/your/image.jpg" alt="Profile Picture of Nadim Hamzeh" class="profile-pic">
+            <h1>Hello, I'm Nadim Hamzeh</h1>
+            <p>A passionate Developer specializing in [Your Primary Field, e.g., Full-Stack Web Development].</p>
+        </div>
+    </section>
 
-        <!-- 
-          <section id="hero" class="pt-24 md:pt-40 min-h-[90vh] flex flex-col justify-center text-center">
-            
-            <!-- FIXED: Line 1: The introductory name or greeting - Made larger -->
-          <section id="hero" class="pt-24 md:pt-40 min-h-[90vh] flex flex-col justify-center text-center">
-            
-            <!-- Line 1: Name (Bigger as requested) -->
-            <p class="text-3xl sm:text-5xl lg:text-6xl font-extrabold accent-text mb-6 uppercase tracking-widest">
-                Nadim Hamzeh
+    <section id="about">
+        <div class="container">
+            <h2>About Me</h2>
+            <p style="max-width: 800px; margin: 0 auto; text-align: center; font-size: 1.1rem;">
+                I believe in crafting elegant solutions to complex problems. With [X] years of experience in [Key Technologies],
+                I thrive on learning and delivering high-quality, impactful work. My goal is to [Your Career Goal].
+                Let's build something great together.
             </p>
-            
-            <!-- Line 2: Profile Picture (Now centered and standalone, slightly increased size) -->
-            <div class="avatar mx-auto mb-6 w-40 h-40 md:w-48 md:h-48 bg-[var(--color-accent)] rounded-full flex items-center justify-center p-2 quick-facts-card overflow-hidden shrink-0">
-               <!-- Make sure to replace 'nadimhamzeh.jpg' with the actual path or uploaded file name if you use this outside the context of the larger file. -->
-               <img src="nadimhamzeh.jpg" alt="Nadim Hamzeh Profile Picture" class="w-full h-full object-cover rounded-full">
-            </div>
-            
-            <!-- Line 3: Title Text (Smaller as requested) -->
-            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight text-[var(--color-text-primary)] text-center mb-8">
-                <span class="accent-text">AI Automation | Software Development </span>
-            </h1>
+        </div>
+    </section>
 
-            <p class="text-2xl sm:text-3xl font-light mb-10 text-[var(--color-text-subtle)] max-w-3xl mx-auto">
-                Transforming complex challenges into scalable, elegant software solutions.
-            </p>
-            <div class="flex justify-center space-x-6">
-                <a href="#projects" class="py-3 px-8 bg-[var(--color-accent)] text-white font-bold text-lg rounded-full shadow-lg transition-all duration-300 transform hover:scale-105" style="box-shadow: 0 0 20px rgba(116, 169, 255, 0.7);">
-                    View My Work
-                </a>
-                <a href="#contact" class="py-3 px-8 border-2 border-[var(--color-accent)] text-[var(--color-accent)] font-bold text-lg rounded-full hover:bg-[var(--color-accent)] hover:text-white transition-all duration-300 transform hover:scale-105">
-                    Contact Me
-                </a>
-                <a href="Nadim_Hamzeh_CV.pdf" download
-                   class="py-3 px-8 border-2 border-[var(--color-accent)] text-[var(--color-accent)] font-bold text-lg rounded-full hover:bg-[var(--color-accent)] hover:text-white transition-all duration-300 transform hover:scale-105">
-                   Download CV
-                </a>
-            </div>
-        </section>
+    <section id="portfolio">
+        <div class="container">
+            <h2>My Recent Work</h2>
+            <div class="portfolio-grid">
 
-        <!-- 
-            1. About Section (Quick Facts block uses the card background color)
-        -->
-        <section id="about" class="py-24 md:py-36 border-t border-[var(--color-subtle-bg)]">
-            <h2 class="section-heading">About Me</h2>
-            <div class="grid md:grid-cols-4 gap-12 items-start">
-                <div class="md:col-span-3 text-lg leading-relaxed space-y-6">
-                    <p>I am a dedicated Computer Science graduate from <b>Beirut Arab University</b> with a passion for transforming complex problems into elegant, automated solutions. I possess a strong foundation in both <b>full-stack development</b> and advanced <b>AI/Deep Learning</b> techniques.</p>
-                    <p>My expertise lies in building robust applications, from <b>Java OOP</b> management systems and <b>Flutter/Django</b> mobile apps to state-of-the-art <b>AI Tutors</b> and <b>Recipe Generators</b> utilizing modern tools like the <b>Gemini LLM</b>, PyTorch, and Sentence Transformers.</p>
-                    <p>I thrive as a <b>Project Manager and Leader</b>, driving projects like SustainGo from concept to deployment, while ensuring high-quality code and effective teamwork. I am natgive in Arabic, Fluent in English, and Professional in French.</p>
-                </div>
-                <!-- Quick Facts Block - uses the dedicated quick-facts-card class which maps to var(--color-card-bg) -->
-                <div class="md:col-span-1 text-sm p-6 rounded-xl quick-facts-card">
-                    <ul class="space-y-3 text-[var(--color-text-subtle)] pt-2">
-                        <li><span class="font-semibold text-[var(--color-text-primary)]">Education:</span> B.Sc. in Computer Science</li>
-                        <li><span class="font-semibold text-[var(--color-text-primary)]">GPA:</span> 3.3/4.0</li>
-                        <li><span class="font-semibold text-[var(--color-text-primary)]">Graduation:</span> May 2025</li>
-                        <li><span class="font-semibold text-[var(--color-text-primary)]">Location:</span> Beirut, Lebanon</li>
-                    </ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- 
-            2. Skills Section (Skill group blocks use the card background color)
-        -->
-        <section id="skills" class="py-24 md:py-36 border-t border-[var(--color-subtle-bg)]">
-            <h2 class="section-heading">Skills & Expertise</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-
-                <!-- AI & Machine Learning -->
-                <div class="skill-group p-6 rounded-xl">
-                    <h3 class="text-2xl font-bold mb-4 accent-text">AI & LLMs</h3>
-                    <div class="flex flex-wrap gap-3">
-                        <span class="skill-tag">AI Automation</span>
-                        <span class="skill-tag">Deep Learning (PyTorch)</span>
-                        <span class="skill-tag">LLM Integration (Gemini, OpenAI)</span>
-                        <span class="skill-tag">Fuzzy Matching</span>
-                        <span class="skill-tag">Sentence Transformers</span>
-                        <span class="skill-tag">Data Preprocessing (Pandas)</span>
-                    </div>
-                </div>
-                
-                <!-- Technical Skills -->
-                <div class="skill-group p-6 rounded-xl">
-                    <h3 class="text-2xl font-bold mb-4 accent-text">Full-Stack Development</h3>
-                    <div class="flex flex-wrap gap-3">
-                        <span class="skill-tag">Python</span>
-                        <span class="skill-tag">Java (OOP)</span>
-                        <span class="skill-tag">JavaScript/Dart</span>
-                        <span class="skill-tag">Flutter & Django</span>
-                        <span class="skill-tag">FastAPI & RESTful APIs</span>
-                        <span class="skill-tag">SQL & PHP</span>
-                        <span class="skill-tag">Git/Version Control</span>
+                <div class="project-card">
+                    <img src="path/to/project1_image.jpg" alt="Project 1 Image">
+                    <div class="project-info">
+                        <h3>Project Name 1 (Web App)</h3>
+                        <p>A description of the project, highlighting the key technologies used (e.g., React, Node.js, MongoDB).</p>
+                        <a href="link-to-live-project" target="_blank">View Live Demo &rarr;</a>
                     </div>
                 </div>
 
-                <!-- Soft Skills & Management -->
-                <div class="skill-group p-6 rounded-xl">
-                    <h3 class="text-2xl font-bold mb-4 accent-text">Leadership & Soft Skills</h3>
-                    <div class="flex flex-wrap gap-3">
-                        <span class="skill-tag">Project Management</span>
-                        <span class="skill-tag">Team Leadership</span>
-                        <span class="skill-tag">Effective Communication</span>
-                        <span class="skill-tag">Public Relations</span>
-                        <span class="skill-tag">Time Management</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-
-        <!-- 
-            3. Experience Section (Experience cards use the card background color)
-        -->
-        <section id="experience" class="py-24 md:py-36 border-t border-[var(--color-subtle-bg)]">
-            <h2 class="section-heading">Experience</h2>
-
-            <div class="space-y-12">
-                
-                <!-- SustainGo (Mobile Application) -->
-                <div class="experience-card p-6 lg:p-10 rounded-xl">
-                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
-                        <h3 class="text-3xl font-bold accent-text mb-2">SustainGo (Mobile Application)</h3>
-                        <p class="text-sm font-medium text-[var(--color-text-subtle)]">Project Manager, Leader | 2023 - 2024</p>
-                    </div>
-                    <p class="mb-6 text-lg">Led and managed the full development lifecycle for a food delivery application, overseeing the website, behaviorism, and API integration. This role emphasized technical leadership and cross-platform development.</p>
-                    <ul class="list-disc list-inside space-y-2 ml-4 text-[var(--color-text-subtle)] text-base">
-                        <li>Developed Front-End using <b>Flutter and Dart</b>.</li>
-                        <li>Developed Back-End using <b>Django, SQL, and PHP</b>.</li>
-                        <li>Designed and implemented robust <b>RESTful APIs</b> using FastAPI.</li>
-                    </ul>
-                    <div class="mt-6 flex flex-wrap gap-3 mb-6">
-                        <span class="skill-tag">Flutter/Dart</span>
-                        <span class="skill-tag">Django</span>
-                        <span class="skill-tag">RESTful APIs</span>
-                        <span class="skill-tag">Project Management</span>
-                    </div>
-
-                    <!-- GitHub Button -->
-                    <div class="mt-6">
-                        <a href="https://github.com/NadimHamzehh/SustainGo" target="_blank" class="flex items-center justify-center w-full py-3 px-4 bg-[#2A4365] text-white font-semibold rounded-lg hover:bg-[#3B5A79] transition-colors">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="mr-2"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.805 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.334-1.758-1.334-1.758-1.087-.731.084-.678.084-.678 1.205.084 1.838 1.237 1.838 1.237 1.07 1.836 2.809 1.305 3.498.998.108-.77.422-1.305.762-1.604-2.665-.305-5.467-1.332-5.467-5.93 0-1.31.465-2.385 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.046.138 3.003.404 2.293-1.552 3.301-1.23 3.301-1.23.652 1.652.241 2.873.118 3.176.77.836 1.233 1.911 1.233 3.221 0 4.609-2.808 5.624-5.474 5.922.43.371.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.562 21.802 24 17.299 24 12c0-6.627-5.373-12-12-12z"/></svg>
-                            GitHub Repository
-                        </a>
+                <div class="project-card">
+                    <img src="path/to/project2_image.jpg" alt="Project 2 Image">
+                    <div class="project-info">
+                        <h3>Project Name 2 (Mobile API)</h3>
+                        <p>Focus on the backend architecture, performance optimizations, and API design using Python/Django.</p>
+                        <a href="link-to-github" target="_blank">View on GitHub &rarr;</a>
                     </div>
                 </div>
 
-
-                <!-- Private Tutor Experience Card -->
-                <div class="experience-card p-6 lg:p-10 rounded-xl">
-                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
-                        <h3 class="text-3xl font-bold accent-text mb-2">Private Tutor for Mathematics & Physics</h3>
-                        <p class="text-sm font-medium text-[var(--color-text-subtle)]">Self-Employed | 2020 - 2022</p>
-                    </div>
-                    <ul class="list-disc list-inside space-y-2 ml-4 text-[var(--color-text-subtle)] text-base">
-                        <li>Provided personalized one-to-one tutoring for approximately 10 hours weekly.</li>
-                        <li>Successfully helped students improve failing grades and achieve success in challenging subjects.</li>
-                        <li>Designed personalized lesson plans tailored to each student's unique needs and learning style.</li>
-                    </ul>
-                </div>
-
-            </div>
-        </section>
-
-
-        <!-- 
-            4. Projects Section (Project cards use the card background color)
-        -->
-        <section id="projects" class="py-24 md:py-36 border-t border-[var(--color-subtle-bg)]">
-            <h2 class="section-heading">Featured Projects</h2>
-            
-            <div class="space-y-12">
-                
-                <!-- Project 1: AlgebrAl (AI Automation) -->
-                <div class="project-card p-6 lg:p-10 rounded-xl">
-                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
-                        <h3 class="text-3xl font-bold accent-text mb-2">AlgebrAl (AI Automation)</h3>
-                        <p class="text-sm font-medium text-[var(--color-text-subtle)]">AI-Powered WhatsApp Math Tutor</p>
-                    </div>
-                    
-                    <p class="mb-6 text-lg">A functional WhatsApp tutor that provides accurate, professional math answers in under 7 seconds. This project showcases practical AI integration and API management for instant, reliable service.</p>
-                    <ul class="list-disc list-inside space-y-2 ml-4 text-[var(--color-text-subtle)] text-base">
-                        <li>Integrated <b>OpenAI and Gemini LLMs</b> for core teaching intelligence and mathematical reasoning.</li>
-                        <li>Managed <b>Twilio API/Webhooks</b> for instant, low-latency message delivery.</li>
-                        <li>Implemented professional prompting and data filtering for high-reliability outputs.</li>
-                    </ul>
-                    
-                    <div class="mt-6 flex flex-wrap gap-3 mb-6">
-                        <span class="skill-tag">Gemini LLM</span>
-                        <span class="skill-tag">Twilio API</span>
-                        <span class="skill-tag">Webhooks</span>
-                        <span class="skill-tag">AI Automation</span>
-                    </div>
-                    
-                    
-                   
-
-                    <!-- Image Gallery -->
-                    <div class="mt-6 border-t pt-6" style="border-color: var(--color-subtle-bg);">
-                        <h4 class="text-xl font-semibold mb-3">Screenshots & Workflow</h4>
-                        <div class="grid grid-cols-2 gap-4">
-                            <img 
-                                src="demo.png" 
-                                alt="AlgebrAl Demo Screenshot (WhatsApp Interface)" 
-                                class="w-full h-auto rounded-lg object-cover cursor-pointer hover:opacity-80 transition-opacity duration-300"
-                                onclick="openModal(this.src)"
-                            >
-                            <img 
-                                src="workflowalgebrai.png" 
-                                alt="AlgebrAl Workflow Diagram" 
-                                class="w-full h-auto rounded-lg object-cover cursor-pointer hover:opacity-80 transition-opacity duration-300"
-                                onclick="openModal(this.src)"
-                            >
-                        </div>
-                        <p class="text-xs text-[var(--color-text-subtle)] mt-2">Click images to enlarge.</p>
+                <div class="project-card">
+                    <img src="path/to/project3_image.jpg" alt="Project 3 Image">
+                    <div class="project-info">
+                        <h3>Project Name 3 (Data Analysis)</h3>
+                        <p>Showcasing skills in data visualization and machine learning models using tools like Pandas and R.</p>
+                        <a href="link-to-report" target="_blank">View Report &rarr;</a>
                     </div>
                 </div>
 
-                <!-- Project 2: Recipe Generator (Deep Learning) -->
-                <div class="project-card p-6 lg:p-10 rounded-xl">
-                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
-                        <h3 class="text-3xl font-bold accent-text mb-2">Recipe Generator (Deep Learning)</h3>
-                        <p class="text-sm font-medium text-[var(--color-text-subtle)]">Intelligent Recipe Generation based on user ingredients</p>
-                    </div>
-                    <p class="mb-6 text-lg">An application that instantly creates recipes from a user's list of ingredients, demonstrating expertise in managing large datasets and delivering a functional AI application.</p>
-                    <ul class="list-disc list-inside space-y-2 ml-4 text-[var(--color-text-subtle)] text-base">
-                        <li>Built the generation model with <b>PyTorch</b> after cleaning/preprocessing a dataset of $50,000+$ recipes.</li>
-                        <li>Utilized <b>Fuzzy Matching</b> and <b>Sentence Transformers</b> for accurate ingredient linking to the dataset.</li>
-                        <li>Developed a clean, functional frontend interface using <b>Streamlit</b>.</li>
-                    </ul>
-
-                    <div class="mt-6 flex flex-wrap gap-3 mb-6">
-                        <span class="skill-tag">PyTorch</span>
-                        <span class="skill-tag">Streamlit</span>
-                        <span class="skill-tag">Deep Learning</span>
-                        <span class="skill-tag">Fuzzy Matching</span>
-                        <span class="skill-tag">Pandas</span>
-                    </div>
-
-                    <!-- GitHub Button -->
-                    <div class="mt-6">
-                        <a href="https://github.com/NadimHamzehh/SustainGo/tree/master/SustainFinal-main/recipe_generator_api" target="_blank" class="flex items-center justify-center w-full py-3 px-4 bg-[#2A4365] text-white font-semibold rounded-lg hover:bg-[#3B5A79] transition-colors">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="mr-2"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.805 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.334-1.758-1.334-1.758-1.087-.731.084-.678.084-.678 1.205.084 1.838 1.237 1.838 1.237 1.07 1.836 2.809 1.305 3.498.998.108-.77.422-1.305.762-1.604-2.665-.305-5.467-1.332-5.467-5.93 0-1.31.465-2.385 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.046.138 3.003.404 2.293-1.552 3.301-1.23 3.301-1.23.652 1.652.241 2.873.118 3.176.77.836 1.233 1.911 1.233 3.221 0 4.609-2.808 5.624-5.474 5.922.43.371.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.562 21.802 24 17.299 24 12c0-6.627-5.373-12-12-12z"/></svg>
-                            GitHub Repository
-                        </a>
-                    </div>
-
-                    <!-- Image Gallery -->
-                    <div class="mt-6 border-t pt-6" style="border-color: var(--color-subtle-bg);">
-                        <h4 class="text-xl font-semibold mb-3">Screenshots & UI</h4>
-                        <div class="grid grid-cols-2 gap-4">
-                             <!-- Using the uploaded images for Recipe Generator -->
-                            <img 
-                                src="emptyrecipe.png" 
-                                alt="Recipe Generator Input Screen" 
-                                class="w-full h-auto rounded-lg object-cover cursor-pointer hover:opacity-80 transition-opacity duration-300"
-                                onclick="openModal(this.src)"
-                            >
-                            <img 
-                                src="inputrecipe.png" 
-                                alt="Recipe Generator Output Example" 
-                                class="w-full h-auto rounded-lg object-cover cursor-pointer hover:opacity-80 transition-opacity duration-300"
-                                onclick="openModal(this.src)"
-                            >
-                        </div>
-                        <p class="text-xs text-[var(--color-text-subtle)] mt-2">Click images to enlarge.</p>
-                    </div>
                 </div>
+        </div>
+    </section>
 
-                <!-- Project 3: BeePro (Java OOP) -->
-                <div class="project-card p-6 lg:p-10 rounded-xl">
-                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
-                        <h3 class="text-3xl font-bold accent-text mb-2">BeePro - Beekeeping Management System</h3>
-                        <p class="text-sm font-medium text-[var(--color-text-subtle)]">Java OOP Desktop Application</p>
-                    </div>
-                    <p class="mb-6 text-lg">A comprehensive desktop application built entirely with <b>Java</b> and strict <b>Object-Oriented Programming (OOP)</b> principles to help beekeepers manage and professionalize their operations, providing actionable business insights.</p>
-                    <ul class="list-disc list-inside space-y-2 ml-4 text-[var(--color-text-subtle)] text-base">
-                        <li>Built entirely using <b>Java</b> and strict <b>Object-Oriented Programming (OOP)</b> methodology.</li>
-                        <li>Enables users to track revenue, profits, stock levels, and other key field-specific metrics.</li>
-                    </ul>
-                    <div class="mt-6 flex flex-wrap gap-3">
-                        <span class="skill-tag">Java</span>
-                        <span class="skill-tag">OOP</span>
-                        <span class="skill-tag">Desktop Application</span>
-                        <span class="skill-tag">Management System</span>
-                    </div>
+    <section id="download-cv" style="padding: 40px 0;">
+        <div class="container">
+            <div class="cv-download-section">
+                <h3>Interested in My Full Background?</h3>
+                <p>Access my detailed professional history, skills matrix, and educational qualifications instantly.</p>
 
-                     <div class="mt-6">
-                        <a href="https://github.com/NadimHamzehh/SustainGo/tree/master/SustainFinal-main/recipe_generator_api" target="_blank" class="flex items-center justify-center w-full py-3 px-4 bg-[#2A4365] text-white font-semibold rounded-lg hover:bg-[#3B5A79] transition-colors">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" class="mr-2"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.805 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.334-1.758-1.334-1.758-1.087-.731.084-.678.084-.678 1.205.084 1.838 1.237 1.838 1.237 1.07 1.836 2.809 1.305 3.498.998.108-.77.422-1.305.762-1.604-2.665-.305-5.467-1.332-5.467-5.93 0-1.31.465-2.385 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.046.138 3.003.404 2.293-1.552 3.301-1.23 3.301-1.23.652 1.652.241 2.873.118 3.176.77.836 1.233 1.911 1.233 3.221 0 4.609-2.808 5.624-5.474 5.922.43.371.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.562 21.802 24 17.299 24 12c0-6.627-5.373-12-12-12z"/></svg>
-                            GitHub Repository
-                        </a>
-                    </div>
-                    
-                    <!-- Image Gallery for BeePro -->
-                    <div class="mt-6 border-t pt-6" style="border-color: var(--color-subtle-bg);">
-                        <h4 class="text-xl font-semibold mb-3">BeePro Screenshots & Features</h4>
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                            
-                            <!-- Placeholder Images for BeePro -->
-                            <img 
-                                src="bee5.png" 
-                                alt="BeePro Main Dashboard" 
-                                class="w-full h-auto rounded-lg object-cover cursor-pointer hover:opacity-80 transition-opacity duration-300"
-                                onclick="openModal(this.src)"
-                            >
-                            <img 
-                                src="bee2.png" 
-                                alt="BeePro Stock and Inventory" 
-                                class="w-full h-auto rounded-lg object-cover cursor-pointer hover:opacity-80 transition-opacity duration-300"
-                                onclick="openModal(this.src)"
-                            >
-                            <img 
-                                src="bee3.png" 
-                                alt="BeePro Financial Tracking" 
-                                class="w-full h-auto rounded-lg object-cover cursor-pointer hover:opacity-80 transition-opacity duration-300"
-                                onclick="openModal(this.src)"
-                            >
-                        </div>
-                        <p class="text-xs text-[var(--color-text-subtle)] mt-2">Click images to enlarge. <span class="accent-text">Note: These are placeholders.</span></p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 
-            5. Contact Section 
-        -->
-        <section id="contact" class="py-24 md:py-36 border-t border-[var(--color-subtle-bg)] text-center">
-            <h2 class="section-heading mx-auto w-fit">Get In Touch</h2>
-            <p class="text-xl mb-10 max-w-3xl mx-auto text-[var(--color-text-subtle)] text-center">
-                I'm actively seeking roles in AI Automation and Full-Stack Development. Let's discuss how my technical leadership and expertise can drive your next project forward.
-            </p>
-            
-            <!-- Centered the Email Button -->
-            <div class="mb-12">
-                 <a href="mailto:nadimhamze3@gmail.com" class="inline-block py-4 px-10 bg-[var(--color-accent)] text-white text-xl font-bold rounded-full shadow-2xl transition-all duration-300 transform hover:scale-105" style="box-shadow: 0 0 30px rgba(116, 169, 255, 0.7);">
-                    Send Me An Email
+                <a id="downloadCvLink" href="Nadim_Hamzeh_CV.pdf" download="Nadim_Hamzeh_CV.pdf" class="download-button">
+                    Download Full CV (PDF)
                 </a>
             </div>
+        </div>
+    </section>
 
-            <!-- Social Links -->
-            <div class="flex justify-center space-x-8">
-                <!-- Email Link -->
-                <a href="mailto:nadimhamze3@gmail.com" target="_blank" class="text-[var(--color-text-subtle)] hover:text-[var(--color-accent)] transition-colors transform hover:scale-110" title="Email">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-9 h-9"><path d="M1.5 8.67v8.581a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3V8.67l-7.46 5.812a4.5 4.5 0 0 1-5.58 0L1.5 8.67ZM4.5 5.25a3 3 0 0 0-3 3v.375h21v-.375a3 3 0 0 0-3-3H4.5Z" /></svg>
-                </a>
-                
-                <!-- Phone Link -->
-                <a href="tel:+96176942377" class="text-[var(--color-text-subtle)] hover:text-[var(--color-accent)] transition-colors transform hover:scale-110" title="Phone">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-9 h-9"><path fill-rule="evenodd" d="M1.5 4.5a3 3 0 0 1 3-3h1.375a3 3 0 0 1 3 3v.265a3 3 0 0 0 .91 2.145l2.427 2.426a1.5 1.5 0 0 0 2.121 0l.507-.507c.325-.325.766-.507 1.227-.507H20.25a.75.75 0 0 1 0 1.5h-3.646l.507.507a3 3 0 0 1 0 4.242L12.56 19.46a3 3 0 0 1-4.242 0l-2.426-2.427a3 3 0 0 0-2.145-.91h-.265a3 3 0 0 1-3-3V4.5Zm6.75-1.5a1.5 1.5 0 0 0-1.5 1.5v3.646a1.5 1.5 0 0 0 .44 1.06l2.427 2.427a1.5 1.5 0 0 0 2.12 0l2.427-2.427a1.5 1.5 0 0 0 .44-1.06V4.5a1.5 1.5 0 0 0-1.5-1.5h-5.25Zm8.25 7.5h.75a1.5 1.5 0 0 0 1.5-1.5V4.5a1.5 1.5 0 0 0-1.5-1.5h-1.375a1.5 1.5 0 0 0-1.5 1.5V11.25a.75.75 0 0 1 1.5 0Z" clip-rule="evenodd" /></svg>
-                </a>
-                
-                <!-- LinkedIn Placeholder - Update with your real link -->
-                <a href="https://lb.linkedin.com/in/nadimhamzeh" target="_blank" class="text-[var(--color-text-subtle)] hover:text-[var(--color-accent)] transition-colors transform hover:scale-110" title="LinkedIn (Placeholder)">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-9 h-9"><path d="M4.98 3.5c0 1.381 1.119 2.5 2.5 2.5s2.5-1.119 2.5-2.5-1.119-2.5-2.5-2.5-2.5 1.119-2.5 2.5zm-.056 20.5h4.98v-16h-4.98v16zm11.08 0h4.98v-10.3c0-2.614-1.396-4.6-3.876-4.6-1.802 0-2.673 1.036-3.117 1.954v-1.654h-4.98v16h4.98v-8.799c0-.466.034-.93.168-1.26a2.126 2.126 0 0 1 1.984-.803c1.397 0 1.838 1.065 1.838 2.62v8.237z"/></svg>
-                </a>
-                
-                <!-- GitHub Placeholder - Update with your real link -->
-                <a href="https://github.com/NadimHamzehh" target="_blank" class="text-[var(--color-text-subtle)] hover:text-[var(--color-accent)] transition-colors transform hover:scale-110" title="GitHub (Placeholder)">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-9 h-9"><path fill-rule="evenodd" d="M12 2.25a9.75 9.75 0 0 0-6.002 1.942.75.75 0 0 0-.008 1.137 9.75 9.75 0 0 0 6.01 16.421 9.75 9.75 0 0 0 6.002-1.942.75.75 0 0 0 .008-1.137 9.75 9.75 0 0 0-6.01-16.421Z" clip-rule="evenodd" /><path d="M10.25 18.75a.75.75 0 0 0 .75-.75v-6a.75.75 0 0 0-1.5 0v6c0 .414.336.75.75.75ZM13.75 18.75a.75.75 0 0 0 .75-.75v-6a.75.75 0 0 0-1.5 0v6c0 .414.336.75.75.75Z" /></svg>
-                </a>
-            </div>
-        </section>
+    <section id="contact">
+        <div class="container">
+            <h2>Contact Me</h2>
+            <p style="text-align: center; margin-bottom: 30px;">I'm always open to discussing new projects, creative ideas, or opportunities. Let's connect!</p>
+            <form action="[YOUR_FORM_SUBMISSION_ENDPOINT]" method="POST" class="contact-form">
+                <input type="text" name="name" placeholder="Your Name" required>
+                <input type="email" name="email" placeholder="Your Email" required>
+                <textarea name="message" placeholder="Your Message" required></textarea>
+                <button type="submit" class="submit-button">Send Message</button>
+            </form>
+        </div>
+    </section>
 
-    </main>
-
-    <!-- Footer -->
-    <footer class="py-10 border-t text-center text-sm text-[var(--color-text-subtle)]" style="border-color: var(--color-subtle-bg); background-color: var(--color-bg-primary);">
-        <p>&copy; <script>document.write(new Date().getFullYear())</script> Nadim Hamzeh. All rights reserved.</p>
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Nadim Hamzeh. All rights reserved. | Built with HTML, CSS, & Dynamic JS.</p>
+        </div>
     </footer>
+
+    <script>
+        // --- 1. Dynamic Section Visibility (Intersection Observer) ---
+        // Makes sections fade in as the user scrolls them into view
+        const sections = document.querySelectorAll('section');
+
+        const observerOptions = {
+            root: null, // relative to the viewport
+            rootMargin: '0px',
+            threshold: 0.2 // Trigger when 20% of the section is visible
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    // Stop observing after it has been revealed once
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            // Do not animate the hero section, it should be visible immediately
+            if (section.id !== 'hero') {
+                observer.observe(section);
+            }
+        });
+
+
+        // --- 2. CV Download Button Confirmation (Adapted from previous solution) ---
+        document.getElementById('downloadCvLink').addEventListener('click', function() {
+            console.log('CV download initiated for Nadim_Hamzeh_CV.pdf');
+
+            const button = this;
+            const originalText = button.innerHTML;
+            const originalColor = button.style.backgroundColor;
+
+            // Change to success state
+            button.innerHTML = 'Download Started! ✅';
+            button.style.backgroundColor = '#28a745'; // Green for success
+
+            // Revert button text and color after a short delay
+            setTimeout(() => {
+                button.innerHTML = originalText;
+                button.style.backgroundColor = originalColor || ''; // Revert to CSS default if no inline style
+            }, 2500);
+        });
+    </script>
 
 </body>
 </html>
